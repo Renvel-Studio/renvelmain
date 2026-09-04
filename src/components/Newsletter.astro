@@ -1,0 +1,28 @@
+---
+// src/components/Newsletter.astro
+---
+
+<!-- Section 8: Newsletter / Strategy Audit Callout -->
+<section class="newsletter-section section-border" aria-label="Strategy Audit Callout">
+  <div class="container">
+    <div class="newsletter-card reveal">
+      <div class="newsletter-card__left">
+        <h2>Always one<br /><span class="text-gradient">step ahead.</span></h2>
+        <p>
+          Join our private strategy brief for case studies, algorithm updates, SEO strategies, and the latest trends
+          in digital growth.
+        </p>
+        <span class="t-mono" style="color: var(--ink-2);">NO SPAM. PURE SUBSTANCE.</span>
+      </div>
+
+      <form class="newsletter-card__form" id="newsletter-form" novalidate>
+        <input type="email" placeholder="Enter your business email" required aria-label="Business Email" />
+        <button type="submit" class="newsletter-btn">
+          <span>Get Strategy Access</span>
+          <div class="btn-dot"></div>
+        </button>
+        <span class="newsletter-success" id="newsletter-success" role="status" aria-live="polite"></span>
+      </form>
+    </div>
+  </div>
+</section>

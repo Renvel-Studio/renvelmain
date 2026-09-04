@@ -1,0 +1,27 @@
+# Renvel Studio — crawler access
+# Full public access so search and AI engines can index everything,
+# including generated sitemaps. No disallowed paths on this static site.
+
+User-agent: *
+Allow: /
+
+# AI assistants and search crawlers explicitly welcome
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://renvel.studio/sitemap.xml

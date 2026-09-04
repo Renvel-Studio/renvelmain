@@ -1,0 +1,173 @@
+/* ============================================================
+   RENVEL STUDIO — Optical & Typographic Balance Engine
+   Master Variable Font Tuning, Optical Sizing & Editorial Hierarchy
+   ============================================================ */
+
+/* --- Base Heading Rules (Fraunces Display Serif) --- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.t-heading-display,
+.t-heading-1 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "dlig" 0;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+/* --- Base Body & Copy Rules (Switzer Neo-Grotesque) --- */
+body,
+p,
+span,
+input,
+textarea,
+button,
+.t-body,
+.t-body-lg {
+  font-family: var(--font-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* --- Technical Accents & Badges (Fragment Mono) --- */
+.t-mono,
+.badge-text,
+.works__label,
+.stat__label,
+.focus-pill-tag,
+.process-card__subtitle,
+.process-card__badge {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* --- Typographic Scale Classes --- */
+.t-heading-1 {
+  font-size: var(--fs-3xl);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.t-body {
+  font-size: var(--fs-md);
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--ink-2);
+  letter-spacing: -0.01em;
+}
+
+.t-body-lg {
+  font-size: var(--fs-lg);
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+}
+
+/* --- Hero Typography Tuning --- */
+.hero__statement h1 {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+  font-feature-settings: "kern" 1, "liga" 1, "dlig" 0;
+  font-size: var(--fs-hero);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  color: var(--ink);
+  text-wrap: balance;
+  text-align: center;
+}
+
+.hero__statement h1 em {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 700;
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+}
+
+/* Hero Subtitle — Optical Balance, Refined Silver Ink, Clean Editorial Wrap */
+.hero__sub {
+  font-family: var(--font-primary);
+  font-size: clamp(1.05rem, 1.25vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--ink-2);
+  max-inline-size: 680px;
+  margin-block-start: var(--space-lg);
+  margin-inline: auto;
+  text-align: center;
+  text-wrap: balance;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  letter-spacing: -0.01em;
+}
+
+.hero__sub strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* --- Animated Gradient Typography --- */
+.text-gradient {
+  background: linear-gradient(
+    90deg,
+    var(--amber),
+    var(--blue-lt),
+    var(--amber)
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: animate-gradient 6s ease infinite;
+  display: inline-block;
+}
+
+.text-gradient-alt {
+  background: linear-gradient(
+    90deg,
+    var(--blue-lt),
+    var(--amber),
+    var(--blue-lt)
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: animate-gradient 6s ease infinite;
+  display: inline-block;
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(
+    90deg,
+    var(--blue-lt),
+    var(--amber),
+    var(--blue-lt)
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: animate-gradient 6s ease infinite;
+  display: inline-block;
+}
+
+@keyframes animate-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

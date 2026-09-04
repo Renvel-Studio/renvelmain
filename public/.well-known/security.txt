@@ -1,0 +1,3 @@
+Contact: mailto:hello@renvelstudio.com
+Preferred-Languages: en
+Canonical: https://renvel.studio/.well-known/security.txt

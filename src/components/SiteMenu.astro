@@ -1,0 +1,48 @@
+---
+// src/components/SiteMenu.astro
+---
+
+<!-- Fullscreen Site Menu Modal -->
+<div class="site-menu" id="site-menu" role="dialog" aria-modal="true" aria-label="Site menu" aria-hidden="true">
+  <div class="site-menu__inner">
+    <div class="site-menu__left">
+      <a href="#contact" class="site-menu__cta" data-menu-link>
+        <span class="site-menu__cta-text">Start a project</span>
+        <span class="site-menu__cta-arrow">↗</span>
+      </a>
+      <div class="site-menu__contact">
+        <a href="mailto:hello@renvelstudio.com" class="site-menu__contact-row" data-menu-link>
+          <span class="site-menu__icon">
+            <i data-lucide="mail" aria-hidden="true"></i>
+          </span>
+          <span class="site-menu__contact-meta">
+            <span class="site-menu__contact-label">E-mail</span>
+            <span class="site-menu__contact-value">hello@renvelstudio.com</span>
+          </span>
+        </a>
+        <div class="site-menu__contact-row">
+          <span class="site-menu__icon">
+            <i data-lucide="phone" aria-hidden="true"></i>
+          </span>
+          <span class="site-menu__contact-meta">
+            <span class="site-menu__contact-label">Telefon</span>
+            <span class="site-menu__contact-value">+30 210 000 0000</span>
+          </span>
+        </div>
+      </div>
+      <div class="site-menu__social">
+        <span class="site-menu__social-label">Follow us</span>
+        <a href="https://www.instagram.com/renvel.creative" target="_blank" rel="noopener noreferrer" class="site-menu__social-link" data-menu-link>Instagram</a>
+        <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="site-menu__social-link" data-menu-link>TikTok</a>
+      </div>
+    </div>
+    <nav class="site-menu__nav" aria-label="Main navigation menu">
+      <a href="#hero" class="site-menu__link" data-menu-link><span>Home</span></a>
+      <a href="#work" class="site-menu__link" data-menu-link><span>Work</span></a>
+      <a href="#process" class="site-menu__link" data-menu-link><span>Method</span></a>
+      <a href="#focus" class="site-menu__link" data-menu-link><span>Capabilities</span></a>
+      <a href="#agency" class="site-menu__link" data-menu-link><span>Agency</span></a>
+      <a href="#contact" class="site-menu__link" data-menu-link><span>Contact</span></a>
+    </nav>
+  </div>
+</div>

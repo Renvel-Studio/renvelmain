@@ -1,0 +1,48 @@
+---
+// src/components/Hero.astro
+---
+
+<!-- Section 2: Hero Section -->
+<section class="hero" id="hero" aria-label="Hero">
+  <div class="hero__content">
+    <div class="hero__statement">
+      <h1 class="reveal">
+        We build brands that <span class="text-gradient">dominate feeds,</span><br>
+        conquer search &amp; <em>convert visitors.</em>
+      </h1>
+    </div>
+
+    <p class="hero__sub reveal reveal-delay-2">
+      Specialized digital growth studio. We engineer <strong>high-performance social media marketing</strong>, <strong>dominant SEO strategies</strong>, and <strong>conversion-first website flagships</strong> that turn attention into market authority.
+    </p>
+
+    <div class="hero__badge-wrap reveal reveal-delay-3">
+      <!-- Rotating Magnetic Badge with Contact Smooth Scroll -->
+      <a href="#contact" class="magnetic-badge" id="hero-badge" aria-label="Start a project - Contact Us">
+        <div class="badge-spin" aria-hidden="true">
+          <svg viewBox="-5 -5 110 110" class="badge-svg">
+            <defs>
+              <path id="pathTop" d="M 15, 50 A 35 35 0 0 1 85 50"></path>
+              <path id="pathBottom" d="M 85, 50 A 35 35 0 0 1 15 50"></path>
+            </defs>
+            <text class="badge-text">
+              <textPath href="#pathTop" startOffset="50%" text-anchor="middle">START A PROJECT ·</textPath>
+              <textPath href="#pathBottom" startOffset="50%" text-anchor="middle">TALK WITH US ·</textPath>
+            </text>
+          </svg>
+        </div>
+        <div class="badge-arrow" aria-hidden="true">
+          <svg class="badge-arrow__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Hero Scroll Line -->
+  <div class="hero__scroll-container">
+    <div class="hero__scroll-line"></div>
+  </div>
+</section>

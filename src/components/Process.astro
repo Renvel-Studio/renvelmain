@@ -1,0 +1,101 @@
+---
+// src/components/Process.astro
+
+interface ProcessStep {
+  index: number;
+  id: string;
+  themeClass: string;
+  isLight?: boolean;
+  title: string;
+  subtitle: string;
+  image: string;
+  alt: string;
+  description: string;
+}
+
+const steps: ProcessStep[] = [
+  {
+    index: 1,
+    id: 'process-card-1',
+    themeClass: 'process-card--magenta',
+    isLight: true,
+    title: '01. Understand',
+    subtitle: 'Discovery & Search Intelligence',
+    image: '/Assets/projects/method-audit.jpg',
+    alt: 'Understand — Search algorithm analysis and audience intelligence audit',
+    description: 'We listen intently, challenge legacy assumptions, and dissect underlying search and social algorithms. High-growth SEO and viral acquisition require relentless immersion into search intent, audience psychology, and competitive voids before writing a single line of code or creative.'
+  },
+  {
+    index: 2,
+    id: 'process-card-2',
+    themeClass: 'process-card--blue',
+    title: '02. Sharpen',
+    subtitle: 'Strategy & Architecture',
+    image: '/Assets/projects/method-position.jpg',
+    alt: 'Sharpen — Strategic brand positioning and conversion web architecture',
+    description: 'We engineer conviction into every touchpoint. We craft high-intent keyword strategies, viral short-form content frameworks, and custom digital flagship architecture — turning passive scrollers into long-term clients with unmistakable positioning that refuses to be ignored.'
+  },
+  {
+    index: 3,
+    id: 'process-card-3',
+    themeClass: 'process-card--lime',
+    isLight: true,
+    title: '03. Dominate',
+    subtitle: 'Execution & Market Scaling',
+    image: '/Assets/projects/method-dominate.jpg',
+    alt: 'Dominate — Execution, digital flagship launch, and market dominance',
+    description: 'We execute relentlessly where market share is won: #1 Google rankings, high-ROAS paid and viral social campaigns, and lightning-fast digital flagship experiences. Relentless optimization. Pure compound growth. Engineered to consistently outpace the competition.'
+  }
+];
+---
+
+<!-- Section 6: 3-Step Process (Editorial Sticky Stacking Cards) -->
+<section class="process section-border" id="process" aria-label="Our Method">
+  <div class="container">
+    <div class="process__header reveal">
+      <h2 class="t-heading-1">
+        Building digital authority<br />is an exact science.
+      </h2>
+      <p class="process__subhead">
+        Scroll to experience our sequential strategy: from market immersion to algorithmic domination.
+      </p>
+    </div>
+
+    <!-- Diagonal statement tape above the method cards -->
+    <div class="method-tape" aria-hidden="true">
+      <div class="method-tape__track">
+        <span>OUR 3-STEP METHOD ·</span>
+        <span>OUR 3-STEP METHOD ·</span>
+        <span>OUR 3-STEP METHOD ·</span>
+        <span>OUR 3-STEP METHOD ·</span>
+        <span>OUR 3-STEP METHOD ·</span>
+        <span>OUR 3-STEP METHOD ·</span>
+      </div>
+    </div>
+
+    <div class="process__stack" id="process-stack">
+      {steps.map((step) => (
+        <article
+          class={`process-card ${step.themeClass} ${step.isLight ? 'process-card--light' : ''}`}
+          id={step.id}
+          data-index={step.index}
+        >
+          <div class="process-card__header">
+            <div class="process-card__title-group">
+              <h3 class="process-card__title">{step.title}</h3>
+              <span class="process-card__subtitle">{step.subtitle}</span>
+            </div>
+          </div>
+
+          <div class="process-card__media">
+            <img src={step.image} alt={step.alt} loading="lazy" />
+          </div>
+
+          <div class="process-card__body">
+            <p class="process-card__text">{step.description}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

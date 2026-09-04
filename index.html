@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Renvel Studio — Social Media, SEO & Web Growth Agency</title>
+  <meta name="description"
+    content="Renvel Studio is a high-end digital growth agency inspired by German editorial design, specializing in social media marketing, SEO, and high-converting websites.">
+  <meta name="author" content="Renvel Studio">
+  <meta name="theme-color" content="#0a0a0c">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Renvel Studio — Social Media, SEO & Web Growth">
+  <meta property="og:description"
+    content="Specialized digital growth agency fusing high-converting website architecture, dominant SEO strategy, and high-impact social media campaigns.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Renvel Studio — Social Media, SEO & Web Growth">
+  <meta name="twitter:description"
+    content="Specialized digital growth agency fusing high-converting website architecture, dominant SEO strategy, and high-impact social media campaigns.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="Assets/renvel-assets/renvel-favicon.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=switzer@100,200,300,400,500,600,700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ============================================================
+       GRAIN & AMBIENT BACKGROUND MESH + PARTICLE CANVAS
+       ============================================================ -->
+  <canvas id="bg-particles" aria-hidden="true"></canvas>
+  <div class="grain-overlay" aria-hidden="true"></div>
+  <div class="ambient-mesh" aria-hidden="true">
+    <div class="ambient-glow ambient-glow-1"></div>
+    <div class="ambient-glow ambient-glow-2"></div>
+    <div class="ambient-glow ambient-glow-3"></div>
+  </div>
+
+  <!-- ============================================================
+       CUSTOM CURSORS (SMALL DOT + CASE FOLLOWER)
+       ============================================================ -->
+  <div id="cursor-dot" class="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-follower" class="cursor-follower" aria-hidden="true">
+    <span class="cursor-follower__text">Explore<br>Case</span>
+  </div>
+
+  <!-- ============================================================
+       SECTION 1: NAVIGATION
+       ============================================================ -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__brand">
+      <a href="#hero" class="nav__logo" aria-label="Renvel Studio Home">
+        <svg class="nav__logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true">
+          <polygon points="16,3 29,27 3,27" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" />
+          <circle cx="16" cy="19" r="4.5" fill="currentColor" />
+          <circle cx="16" cy="19" r="1.8" fill="#0a0a0c" />
+        </svg>
+        <span class="nav__logo-text">Renvel Studio</span>
+      </a>
+    </div>
+
+    <div class="nav__right">
+      <button class="nav__burger" id="nav-burger" aria-label="Open menu" aria-expanded="false"
+        aria-controls="site-menu">
+        <span class="nav__burger-line"></span>
+        <span class="nav__burger-line"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Fullscreen Site Menu (SCHAU & HORCH style) -->
+  <div class="site-menu" id="site-menu" role="dialog" aria-modal="true" aria-label="Site menu" aria-hidden="true">
+    <div class="site-menu__inner">
+      <div class="site-menu__left">
+        <a href="#contact" class="site-menu__cta" data-menu-link>
+          <span class="site-menu__cta-text">Start a project</span>
+          <span class="site-menu__cta-arrow">↗</span>
+        </a>
+        <div class="site-menu__contact">
+          <a href="mailto:hello@renvelstudio.com" class="site-menu__contact-row" data-menu-link>
+            <span class="site-menu__icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="m22 7-10 6L2 7"></path>
+              </svg>
+            </span>
+            <span class="site-menu__contact-meta">
+              <span class="site-menu__contact-label">E-mail</span>
+              <span class="site-menu__contact-value">hello@renvelstudio.com</span>
+            </span>
+          </a>
+          <div class="site-menu__contact-row">
+            <span class="site-menu__icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.9.34 1.79.66 2.64a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.44-1.23a2 2 0 0 1 2.11-.45c.85.32 1.74.54 2.64.66A2 2 0 0 1 22 16.92z">
+                </path>
+              </svg>
+            </span>
+            <span class="site-menu__contact-meta">
+              <span class="site-menu__contact-label">Telefon</span>
+              <span class="site-menu__contact-value">+30 210 000 0000</span>
+            </span>
+          </div>
+        </div>
+        <div class="site-menu__social">
+          <span class="site-menu__social-label">Follow us</span>
+          <a href="https://www.instagram.com/renvel.creative" target="_blank" rel="noopener noreferrer"
+            class="site-menu__social-link" data-menu-link>Instagram</a>
+          <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="site-menu__social-link"
+            data-menu-link>TikTok</a>
+        </div>
+      </div>
+      <nav class="site-menu__nav" aria-label="Menu">
+        <a href="#hero" class="site-menu__link" data-menu-link><span>Home</span></a>
+        <a href="#work" class="site-menu__link" data-menu-link><span>Work</span></a>
+        <a href="#process" class="site-menu__link" data-menu-link><span>Method</span></a>
+        <a href="#focus" class="site-menu__link" data-menu-link><span>Capabilities</span></a>
+        <a href="#agency" class="site-menu__link" data-menu-link><span>Agency</span></a>
+        <a href="#contact" class="site-menu__link" data-menu-link><span>Contact</span></a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SECTION 2: HERO (SCHAU & HORCH EDITORIAL STYLE)
+       ============================================================ -->
+  <section class="hero" id="hero" aria-label="Hero">
+    <div class="hero__content">
+      <div class="hero__statement">
+        <h1 class="reveal">
+          We build brands that<br>
+          <span class="text-gradient">dominate feeds,</span><br>
+          conquer search &amp;<br>
+          <em>convert visitors.</em>
+        </h1>
+      </div>
+    </div>
+
+    <div class="hero__bottom">
+      <div class="hero__positioning reveal reveal-delay-2">
+        <p>
+          Specialized digital growth studio. We engineer high-performance social media marketing, dominant SEO
+          strategies, and conversion-first website flagships that turn attention into market authority.
+        </p>
+      </div>
+
+      <div class="hero__right reveal reveal-delay-3">
+        <!-- SCHAU & HORCH ROTATING MAGNETIC BADGE WITH CONTACT SMOOTH SCROLL -->
+        <a href="#contact" class="magnetic-badge" id="hero-badge" aria-label="Start a project - Contact Us">
+          <div class="badge-spin">
+            <svg viewBox="-5 -5 110 110" class="badge-svg">
+              <defs>
+                <path id="pathTop" d="M 15, 50 A 35 35 0 0 1 85 50"></path>
+                <path id="pathBottom" d="M 85, 50 A 35 35 0 0 1 15 50"></path>
+              </defs>
+              <text class="badge-text">
+                <textPath href="#pathTop" startOffset="50%" text-anchor="middle">START A PROJECT ·</textPath>
+                <textPath href="#pathBottom" startOffset="50%" text-anchor="middle">TALK WITH US ·</textPath>
+              </text>
+            </svg>
+          </div>
+          <div class="badge-arrow">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M7 17L17 7M17 7H7M17 7V17"></path>
+            </svg>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Scroll Line -->
+    <div class="hero__scroll-container">
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3: INTRO MANIFESTO STATEMENT
+       ============================================================ -->
+  <section class="intro section-border" aria-label="Intro Statement">
+    <div class="container">
+      <h2 class="intro__headline reveal">
+        Where conviction meets strategy,<br>
+        <span class="text-gradient-alt">digital growth is born.</span>
+      </h2>
+
+      <div class="intro__grid">
+        <div class="intro__lead reveal reveal-delay-1">
+          <p class="t-body-lg">
+            Brands aren't just logos. They're decisions. Instincts. Digital footprints. But many lose their edge —
+            sounding like everyone, looking like many, and converting no one.
+          </p>
+        </div>
+        <div class="intro__col reveal reveal-delay-2">
+          <p class="t-body">
+            At Renvel Studio, we build digital presence with substance and style. Driven by search intelligence. Defined
+            by design conviction. Built for businesses ready to lead while others merely follow.
+          </p>
+          <p class="t-body" style="margin-top: 1.5rem;">
+            From full-scale SEO overhauls to high-converting Next.js websites and viral social media campaigns: we craft
+            positionings that don't just look pretty — they perform. High-impact. Long-term. Intentionally edgy.
+          </p>
+        </div>
+        <div class="intro__col reveal reveal-delay-3">
+          <p class="t-body">
+            Social, SEO, Digital Flagships. Anything but ordinary. We don't chase vanity metrics; we build digital
+            legacies. Because impact beats simple visibility every single time.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4: NEON GRADIENT BANNER & INFINITE TICKER
+       ============================================================ -->
+  <section class="gradient-banner" aria-label="Vibrant Banner">
+    <div class="gradient-banner__content reveal">
+      <h2>Too bold to<br>remain a briefing.</h2>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 5: SELECTED WORKS GRID
+       ============================================================ -->
+  <section class="works section-border" id="work" aria-label="Selected work">
+    <div class="works__header reveal">
+      <div>
+        <span class="works__label">Selected Work</span>
+        <h2 class="t-heading-1" style="margin-top: 1rem;">Growth systems<br>that <span class="text-gradient-alt">scaled
+            revenue.</span></h2>
+      </div>
+      <span class="works__label">04 Cases</span>
+    </div>
+
+    <div class="works__grid">
+
+      <!-- Project 1: Kinetic Athletics -->
+      <article class="works__item reveal" id="project-kinetic">
+        <div class="works__item-image-wrap">
+          <img class="works__item-image" src="Assets/projects/maison-verde.png"
+            alt="Kinetic Athletics Social Media Campaign — High engagement social content and performance video marketing"
+            loading="lazy">
+          <div class="works__item-overlay"></div>
+        </div>
+        <div class="works__item-meta">
+          <div class="works__glass-badge">
+            <span class="luminous-dot"></span>
+            <span class="works__glass-badge-text">Case Study</span>
+            <span class="works__glass-arrow">↗</span>
+          </div>
+          <span class="works__item-name">Kinetic Athletics</span>
+          <span class="works__item-industry">Social Media &amp; Viral Growth</span>
+          <span class="works__item-deliverables">Paid Social · Short-Form Reels · 14.2x ROAS</span>
+          <span class="works__item-year">2024</span>
+        </div>
+      </article>
+
+      <!-- Project 2: Aether Tech -->
+      <article class="works__item reveal" id="project-aether">
+        <div class="works__item-image-wrap">
+          <img class="works__item-image" src="Assets/projects/nordkap-finance.png"
+            alt="Aether Tech SEO Dominance — Search engine optimization overhaul and technical content architecture"
+            loading="lazy">
+          <div class="works__item-overlay"></div>
+        </div>
+        <div class="works__item-meta">
+          <div class="works__glass-badge">
+            <span class="luminous-dot"></span>
+            <span class="works__glass-badge-text">Case Study</span>
+            <span class="works__glass-arrow">↗</span>
+          </div>
+          <span class="works__item-name">Aether Tech</span>
+          <span class="works__item-industry">Search Engine Optimization (SEO)</span>
+          <span class="works__item-deliverables">Technical SEO · Keyword Dominance · +420% Organic</span>
+          <span class="works__item-year">2024</span>
+        </div>
+      </article>
+
+      <!-- Project 3: Lumen Flagship -->
+      <article class="works__item reveal" id="project-lumen">
+        <div class="works__item-image-wrap">
+          <img class="works__item-image" src="Assets/projects/atelier-beton.png"
+            alt="Lumen Flagship Website — Modern conversion-first web design and custom UI/UX system" loading="lazy">
+          <div class="works__item-overlay"></div>
+        </div>
+        <div class="works__item-meta">
+          <div class="works__glass-badge">
+            <span class="luminous-dot"></span>
+            <span class="works__glass-badge-text">Case Study</span>
+            <span class="works__glass-arrow">↗</span>
+          </div>
+          <span class="works__item-name">Lumen Studio</span>
+          <span class="works__item-industry">Digital Flagship &amp; E-Commerce</span>
+          <span class="works__item-deliverables">Custom Web Architecture · UX/UI · 4.8% Conv. Rate</span>
+          <span class="works__item-year">2024</span>
+        </div>
+      </article>
+
+      <!-- Project 4: Valo Capital -->
+      <article class="works__item reveal" id="project-valo">
+        <div class="works__item-image-wrap">
+          <img class="works__item-image" src="Assets/projects/terra-botanica.png"
+            alt="Valo Capital Social Ads & Performance Campaign — Creative ad direction and social audience acquisition"
+            loading="lazy">
+          <div class="works__item-overlay"></div>
+        </div>
+        <div class="works__item-meta">
+          <div class="works__glass-badge">
+            <span class="luminous-dot"></span>
+            <span class="works__glass-badge-text">Case Study</span>
+            <span class="works__glass-arrow">↗</span>
+          </div>
+          <span class="works__item-name">Valo Capital</span>
+          <span class="works__item-industry">Performance Marketing &amp; Ads</span>
+          <span class="works__item-deliverables">Meta &amp; TikTok Ads · Ad Creative · 12M Reach</span>
+          <span class="works__item-year">2023</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 6: 3-STEP PROCESS (EDITORIAL STICKY STACKING CARDS)
+       ============================================================ -->
+  <section class="process section-border" id="process" aria-label="Our Method">
+    <div class="container">
+      <div class="process__header reveal">
+        <div class="process__eyebrow">
+          <span class="luminous-dot"></span>
+          <span class="t-mono text-gradient">OUR 3-STEP GROWTH METHOD</span>
+        </div>
+        <h2 class="t-heading-1" style="margin-top: 0.75rem;">Building digital authority<br>is an exact science.</h2>
+        <p class="process__subhead">Scroll to experience our sequential strategy: from market immersion to algorithmic
+          domination.</p>
+      </div>
+
+      <!-- Diagonal statement tape above the method cards -->
+      <div class="method-tape" aria-hidden="true">
+        <div class="method-tape__track">
+          <span>OUR 3-STEP METHOD</span>
+          <span>OUR 3-STEP METHOD</span>
+          <span>OUR 3-STEP METHOD</span>
+          <span>OUR 3-STEP METHOD</span>
+          <span>OUR 3-STEP METHOD</span>
+          <span>OUR 3-STEP METHOD</span>
+        </div>
+      </div>
+
+      <div class="process__stack" id="process-stack">
+
+        <!-- Card 01: Understand & Audit (Neon Magenta) -->
+        <article class="process-card process-card--magenta" id="process-card-1" data-index="1">
+          <div class="process-card__header">
+            <div class="process-card__title-group">
+              <h3 class="process-card__title">01. Understand</h3>
+              <span class="process-card__subtitle">Discovery &amp; Search Intelligence</span>
+            </div>
+            <div class="process-card__badge">
+              <span class="process-card__badge-dot"></span>
+              <span>PHASE 01 // AUDIT</span>
+            </div>
+          </div>
+
+          <div class="process-card__media">
+            <img src="Assets/projects/method-audit.jpg"
+              alt="Understand — Search algorithm analysis and audience intelligence audit" loading="lazy">
+            <div class="process-card__media-badge">
+              <span>Audience &amp; Algorithm Immersion</span>
+            </div>
+          </div>
+
+          <div class="process-card__body">
+            <p class="process-card__text">
+              We listen intently, challenge legacy assumptions, and dissect underlying search and social algorithms.
+              High-growth SEO and viral acquisition require relentless immersion into search intent, audience
+              psychology, and competitive voids before writing a single line of code or creative.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 02: Sharpen & Position (Electric Blue) -->
+        <article class="process-card process-card--blue" id="process-card-2" data-index="2">
+          <div class="process-card__header">
+            <div class="process-card__title-group">
+              <h3 class="process-card__title">02. Sharpen</h3>
+              <span class="process-card__subtitle">Strategy &amp; Architecture</span>
+            </div>
+            <div class="process-card__badge">
+              <span class="process-card__badge-dot"></span>
+              <span>PHASE 02 // BLUEPRINT</span>
+            </div>
+          </div>
+
+          <div class="process-card__media">
+            <img src="Assets/projects/method-position.jpg"
+              alt="Sharpen — Strategic brand positioning and conversion web architecture" loading="lazy">
+            <div class="process-card__media-badge">
+              <span>Positioning &amp; Conversion UX</span>
+            </div>
+          </div>
+
+          <div class="process-card__body">
+            <p class="process-card__text">
+              We engineer conviction into every touchpoint. We craft high-intent keyword strategies, viral short-form
+              content frameworks, and custom digital flagship architecture — turning passive scrollers into long-term
+              clients with unmistakable positioning that refuses to be ignored.
+            </p>
+          </div>
+        </article>
+
+        <!-- Card 03: Dominate & Scale (Neon Lime) -->
+        <article class="process-card process-card--lime" id="process-card-3" data-index="3">
+          <div class="process-card__header">
+            <div class="process-card__title-group">
+              <h3 class="process-card__title">03. Dominate</h3>
+              <span class="process-card__subtitle">Execution &amp; Market Scaling</span>
+            </div>
+            <div class="process-card__badge">
+              <span class="process-card__badge-dot"></span>
+              <span>PHASE 03 // VELOCITY</span>
+            </div>
+          </div>
+
+          <div class="process-card__media">
+            <img src="Assets/projects/method-dominate.jpg"
+              alt="Dominate — Execution, digital flagship launch, and market dominance" loading="lazy">
+            <div class="process-card__media-badge">
+              <span>Full-Spectrum Growth Engine</span>
+            </div>
+          </div>
+
+          <div class="process-card__body">
+            <p class="process-card__text">
+              We execute relentlessly where market share is won: #1 Google rankings, high-ROAS paid and viral social
+              campaigns, and lightning-fast digital flagship experiences. Relentless optimization. Pure compound growth.
+              Engineered to consistently outpace the competition.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 7: OUR FOCUS (MINIMAL PINNED HORIZONTAL SCROLL)
+       ============================================================ -->
+  <section class="focus-pinned-section" id="focus" aria-label="Our Focus">
+    <div class="focus-pinned-track" id="focus-pinned-track">
+      <div class="focus-sticky-viewport" id="focus-sticky-viewport">
+
+        <!-- Centered Blurring Title (Becomes sharp on scroll) -->
+        <div class="focus-hero-title-wrap">
+          <h2 class="focus-blur-title" id="focus-blur-title">our<br>focus</h2>
+        </div>
+
+        <!-- Horizontal Moving Tiles Track (Moves right to left on scroll) -->
+        <div class="focus-horizontal-strip" id="focus-horizontal-strip">
+
+          <!-- Tile 1: Social Media Growth -->
+          <article class="focus-tile" id="focus-tile-1">
+            <div class="focus-tile__content">
+              <h3 class="focus-tile__heading">Social Media Growth</h3>
+              <p class="focus-tile__desc">
+                We build the core of your brand: scroll-stopping reels, organic viral reach, and high-ROAS paid funnels
+                across Meta and TikTok that turn attention into market authority.
+              </p>
+              <div class="focus-tile__tags">
+                <span class="focus-pill-tag">PAID SOCIAL</span>
+                <span class="focus-pill-tag">VIRAL REELS</span>
+                <span class="focus-pill-tag">CONTENT ENGINE</span>
+              </div>
+              <div class="focus-tile__actions">
+                <a href="#contact" class="focus-tile-btn">
+                  <span>Social Growth</span>
+                  <div class="focus-tile-btn__arrow">↗</div>
+                </a>
+                <a href="#contact" class="focus-tile-btn">
+                  <span>Viral Ads</span>
+                  <div class="focus-tile-btn__arrow">↗</div>
+                </a>
+              </div>
+            </div>
+            <div class="focus-tile__visual">
+              <svg viewBox="0 0 340 260" fill="none" class="focus-tile__svg" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <!-- Floor Grid Pattern -->
+                  <pattern id="grid1" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.8" />
+                  </pattern>
+                  <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ff1493" />
+                    <stop offset="100%" stop-color="#d6006e" />
+                  </linearGradient>
+                  <linearGradient id="pinkTop" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ff66b2" />
+                    <stop offset="100%" stop-color="#ff1493" />
+                  </linearGradient>
+                  <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#00c8ff" />
+                    <stop offset="100%" stop-color="#0088cc" />
+                  </linearGradient>
+                  <linearGradient id="cyanTop" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#80e5ff" />
+                    <stop offset="100%" stop-color="#00c8ff" />
+                  </linearGradient>
+                  <linearGradient id="limeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#2bfb73" />
+                    <stop offset="100%" stop-color="#1ae360" />
+                  </linearGradient>
+                  <linearGradient id="limeTop" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#7affaa" />
+                    <stop offset="100%" stop-color="#2bfb73" />
+                  </linearGradient>
+                </defs>
+
+                <!-- Perspective Floor Grid (matching image 2 & 3) -->
+                <g transform="translate(170, 200) scale(1, 0.45) rotate(45)">
+                  <rect x="-130" y="-130" width="260" height="260" fill="url(#grid1)" stroke="rgba(255,255,255,0.12)"
+                    stroke-width="1" />
+                </g>
+
+                <!-- 3D Geometric Blocks Composition (Matching Image 3) -->
+                <!-- Mint Green Column Left -->
+                <g transform="translate(65, 85)">
+                  <!-- Left side -->
+                  <polygon points="0,35 0,115 26,130 26,50" fill="#13a343" />
+                  <!-- Right side -->
+                  <polygon points="26,50 26,130 52,115 52,35" fill="url(#limeGrad)" />
+                  <!-- Top face -->
+                  <polygon points="0,35 26,20 52,35 26,50" fill="url(#limeTop)" />
+                </g>
+
+                <!-- Hot Pink Number '1' Pillar Center -->
+                <g transform="translate(130, 40)">
+                  <!-- Left side -->
+                  <polygon points="0,45 0,165 42,190 42,70" fill="#99004d" />
+                  <!-- Right side -->
+                  <polygon points="42,70 42,190 84,165 84,45" fill="url(#pinkGrad)" />
+                  <!-- Top face -->
+                  <polygon points="0,45 42,20 84,45 42,70" fill="url(#pinkTop)" />
+                  <!-- Number 1 inscription -->
+                  <text x="63" y="125" font-family="'JetBrains Mono', monospace" font-size="44" font-weight="900"
+                    fill="#1a000d" text-anchor="middle">1</text>
+                </g>
+
+                <!-- Cyan Cube with Target Right -->
+                <g transform="translate(205, 100)">
+                  <!-- Left side -->
+                  <polygon points="0,30 0,95 32,112 32,47" fill="#006699" />
+                  <!-- Right side -->
+                  <polygon points="32,47 32,112 64,95 64,30" fill="url(#cyanGrad)" />
+                  <!-- Top face -->
+                  <polygon points="0,30 32,13 64,30 32,47" fill="url(#cyanTop)" />
+                  <!-- Target Crosshair Graphic on Right Face -->
+                  <circle cx="48" cy="79" r="14" stroke="#003d5c" stroke-width="2.5" fill="none" />
+                  <circle cx="48" cy="79" r="7" stroke="#003d5c" stroke-width="2" fill="none" />
+                  <circle cx="48" cy="79" r="2.5" fill="#003d5c" />
+                  <line x1="48" y1="60" x2="48" y2="98" stroke="#003d5c" stroke-width="1.8" />
+                  <line x1="29" y1="79" x2="67" y2="79" stroke="#003d5c" stroke-width="1.8" />
+                </g>
+
+                <!-- Dark Charcoal Pillar Back -->
+                <g transform="translate(210, 60)">
+                  <polygon points="0,25 0,70 24,84 24,39" fill="#18181f" />
+                  <polygon points="24,39 24,84 48,70 48,25" fill="#252530" />
+                  <polygon points="0,25 24,11 48,25 24,39" fill="#353545" />
+                </g>
+              </svg>
+            </div>
+          </article>
+
+          <!-- Tile 2: SEO Dominance -->
+          <article class="focus-tile" id="focus-tile-2">
+            <div class="focus-tile__content">
+              <h3 class="focus-tile__heading">SEO Dominance</h3>
+              <p class="focus-tile__desc">
+                We engineer organic search supremacy: technical audits, intent positioning, and semantic content
+                ecosystems that capture #1 Google rankings where decisions are made.
+              </p>
+              <div class="focus-tile__tags">
+                <span class="focus-pill-tag">TECHNICAL SEO</span>
+                <span class="focus-pill-tag">KEYWORD #1</span>
+                <span class="focus-pill-tag">+420% ORGANIC</span>
+              </div>
+              <div class="focus-tile__actions">
+                <a href="#contact" class="focus-tile-btn">
+                  <span>Search Audit</span>
+                  <div class="focus-tile-btn__arrow">↗</div>
+                </a>
+                <a href="#contact" class="focus-tile-btn">
+                  <span>Rank Strategy</span>
+                  <div class="focus-tile-btn__arrow">↗</div>
+                </a>
+              </div>
+            </div>
+            <div class="focus-tile__visual">
+              <svg viewBox="0 0 340 260" fill="none" class="focus-tile__svg" xmlns="http://www.w3.org/2000/svg">
+                <!-- Perspective Floor Grid -->
+                <g transform="translate(170, 200) scale(1, 0.45) rotate(45)">
+                  <rect x="-130" y="-130" width="260" height="260" fill="url(#grid1)" stroke="rgba(255,255,255,0.12)"
+                    stroke-width="1" />
+                </g>
+
+                <!-- Ascending 3D Steps / Search Hierarchy -->
+                <!-- Step 1 -->
+                <g transform="translate(70, 130)">
+                  <polygon points="0,25 0,75 35,95 35,45" fill="#004d73" />
+                  <polygon points="35,45 35,95 70,75 70,25" fill="#0088cc" />
+                  <polygon points="0,25 35,5 70,25 35,45" fill="#00aaff" />
+                </g>
+
+                <!-- Step 2 -->
+                <g transform="translate(135, 85)">
+                  <polygon points="0,30 0,120 40,143 40,53" fill="#0077b3" />
+                  <polygon points="40,53 40,143 80,120 80,30" fill="#00b4d8" />
+                  <polygon points="0,30 40,7 80,30 40,53" fill="#48cae4" />
+                  <!-- Ranking Icon -->
+                  <text x="60" y="95" font-family="'JetBrains Mono', monospace" font-size="26" font-weight="900"
+                    fill="#003547" text-anchor="middle">#1</text>
+                </g>
+
+                <!-- Step 3: Tallest Apex Column -->
+                <g transform="translate(210, 45)">
+                  <polygon points="0,35 0,160 38,182 38,57" fill="#13a343" />
+                  <polygon points="38,57 38,182 76,160 76,35" fill="url(#limeGrad)" />
+                  <polygon points="0,35 38,13 76,35 38,57" fill="url(#limeTop)" />
+                </g>
+
+                <!-- Floating Magnifying / Focal Node -->
+                <g transform="translate(175, 40)">
+                  <circle cx="0" cy="0" r="18" stroke="#39ff14" stroke-width="3" fill="rgba(57,255,20,0.15)" />
+                  <line x1="12" y1="12" x2="26" y2="26" stroke="#39ff14" stroke-width="4" stroke-linecap="round" />
+                </g>
+              </svg>
+            </div>
+          </article>
+
+          <!-- Tile 3: Digital Flagships -->
+          <article class="focus-tile" id="focus-tile-3">
+            <div class="focus-tile__content">
+              <h3 class="focus-tile__heading">Digital Flagships</h3>
+              <p class="focus-tile__desc">
+                We give your brand an unmistakable digital home: bespoke web design, lightning-quick Next.js
+                architecture, and bulletproof conversion UX built to turn visitors into clients.
+              </p>
+              <div class="focus-tile__tags">
+                <span class="focus-pill-tag">NEXT.JS / VITE</span>
+                <span class="focus-pill-tag">CUSTOM UI/UX</span>
+                <span class="focus-pill-tag">SUB-SECOND</span>
+              </div>
+              <div class="focus-tile__actions">
+                <a href="#contact" class="focus-tile-btn">
+                  <span>Web Flagship</span>
+                  <div class="focus-tile-btn__arrow">↗</div>
+                </a>
+                <a href="#contact" class="focus-tile-btn">
+                  <span>Conversion UX</span>
+                  <div class="focus-tile-btn__arrow">↗</div>
+                </a>
+              </div>
+            </div>
+            <div class="focus-tile__visual">
+              <svg viewBox="0 0 340 260" fill="none" class="focus-tile__svg" xmlns="http://www.w3.org/2000/svg">
+                <!-- Perspective Floor Grid -->
+                <g transform="translate(170, 200) scale(1, 0.45) rotate(45)">
+                  <rect x="-130" y="-130" width="260" height="260" fill="url(#grid1)" stroke="rgba(255,255,255,0.12)"
+                    stroke-width="1" />
+                </g>
+
+                <!-- 3D Layered Isometric Browser Cards -->
+                <!-- Back Slate Window -->
+                <g transform="translate(110, 50)">
+                  <polygon points="0,30 0,110 90,162 90,82" fill="#181822" />
+                  <polygon points="90,82 90,162 135,136 135,56" fill="#22222e" />
+                  <polygon points="0,30 45,4 135,56 90,82" fill="#2c2c3a" />
+                </g>
+
+                <!-- Front Glassmorphic Floating Window -->
+                <g transform="translate(70, 80)">
+                  <polygon points="0,35 0,130 110,193 110,98" fill="rgba(0, 200, 255, 0.15)" stroke="#00c8ff"
+                    stroke-width="2" />
+                  <polygon points="110,98 110,193 155,167 155,72" fill="rgba(0, 200, 255, 0.25)" stroke="#00c8ff"
+                    stroke-width="2" />
+                  <polygon points="0,35 45,9 155,72 110,98" fill="rgba(255, 255, 255, 0.15)" stroke="#80e5ff"
+                    stroke-width="2" />
+                  <!-- Window Dot Buttons -->
+                  <circle cx="25" cy="55" r="3.5" fill="#ff5f56" />
+                  <circle cx="36" cy="61" r="3.5" fill="#ffbd2e" />
+                  <circle cx="47" cy="67" r="3.5" fill="#27c93f" />
+                  <!-- Code Glyphs -->
+                  <text x="55" y="130" font-family="'JetBrains Mono', monospace" font-size="28" font-weight="700"
+                    fill="#39ff14" transform="skewY(30)">&lt;/&gt;</text>
+                </g>
+              </svg>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 8: NEWSLETTER / STRATEGY AUDIT BOX
+       ============================================================ -->
+  <section class="newsletter-section section-border" aria-label="Strategy Audit Callout">
+    <div class="container">
+      <div class="newsletter-card reveal">
+        <div class="newsletter-card__left">
+          <h2>Always one<br><span class="text-gradient">step ahead.</span></h2>
+          <p>Join our private strategy brief for case studies, algorithm updates, SEO strategies, and the latest trends
+            in digital growth.</p>
+          <span class="t-mono" style="color: var(--text-muted);">NO SPAM. PURE SUBSTANCE.</span>
+        </div>
+
+        <form class="newsletter-card__form" id="newsletter-form" novalidate>
+          <input type="email" placeholder="Enter your business email" required aria-label="Business Email">
+          <button type="submit" class="newsletter-btn">
+            <span>Get Strategy Access</span>
+            <div class="btn-dot"></div>
+          </button>
+          <span class="newsletter-success" id="newsletter-success" role="status" aria-live="polite"></span>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION 9: MANIFESTO & METRICS
+       ============================================================ -->
+  <section class="manifesto section-border" id="agency" aria-label="Studio manifesto and metrics">
+
+    <div class="manifesto__stats">
+      <div class="stat reveal">
+        <span class="stat__number">150M+</span>
+        <span class="stat__label">Impressions Generated</span>
+        <span class="stat__description">Targeted social media reach and content distribution across global
+          campaigns.</span>
+      </div>
+      <div class="stat reveal reveal-delay-1">
+        <span class="stat__number">+420%</span>
+        <span class="stat__label">Organic SEO Traffic Growth</span>
+        <span class="stat__description">Average organic search engine growth across client portfolios.</span>
+      </div>
+      <div class="stat reveal reveal-delay-2">
+        <span class="stat__number">3.8x</span>
+        <span class="stat__label">Average Campaign ROAS</span>
+        <span class="stat__description">Direct return on ad spend driven by strategic creative and web conversion
+          design.</span>
+      </div>
+    </div>
+
+    <div class="manifesto__quote reveal">
+      <blockquote>
+        "We don't chase vanity metrics. We architect digital ecosystems where <span class="text-gradient">social media
+          attention,</span> <span class="text-gradient-alt">search dominance,</span> and <span
+          class="text-gradient-cyan">web conversion</span> compound into market leadership."
+      </blockquote>
+      <p class="manifesto__quote-attribution">— Renvel Studio</p>
+    </div>
+
+  </section>
+
+  <!-- ============================================================
+       SECTION 10: FOOTER / DIRECT ACTION TRIGGER
+       ============================================================ -->
+  <footer class="footer section-border" id="contact" role="contentinfo" aria-label="Contact and footer">
+
+    <div class="footer__headline-container reveal">
+      <h2>Your next<br>project? Could<br>be your <span class="text-gradient">best.</span></h2>
+    </div>
+
+    <div class="footer__cta-section">
+      <a href="mailto:hello@renvelstudio.com" class="footer__cta-link magnetic-btn" id="footer-cta">
+        <span class="footer__cta-text">Start a Conversation</span>
+        <span class="footer__cta-arrow">↗</span>
+      </a>
+    </div>
+
+    <div class="footer__bottom">
+      <div class="footer__clock" id="footer-clock" aria-label="Live timezone clock">
+        Athens, Greece 00:00:00
+      </div>
+
+      <div class="footer__legal">
+        <a href="#" id="link-privacy">Privacy Policy</a>
+        <a href="#" id="link-imprint">Legal Notice</a>
+        <a href="#" id="link-terms">Terms</a>
+      </div>
+
+      <div class="footer__social">
+        <a href="https://www.instagram.com/renvel.creative" class="footer__social-link" id="link-instagram"
+          target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round" stroke-linejoin="round" class="footer__social-icon">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+        </a>
+        <a href="https://tiktok.com/@renvel.creative" class="footer__social-link" id="link-tiktok" target="_blank"
+          rel="noopener noreferrer" aria-label="TikTok">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" class="footer__social-icon">
+            <path
+              d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.68 6.34 6.34 0 0 0 9.33 22a6.33 6.33 0 0 0 6.34-6.32V8.65a8.28 8.28 0 0 0 4.83 1.55V6.75a4.86 4.86 0 0 1-.91-.06z" />
+          </svg>
+        </a>
+      </div>
+
+      <p class="footer__copyright">
+        &copy; <span id="copyright-year">2026</span> Renvel Studio. All rights reserved.
+      </p>
+    </div>
+
+  </footer>
+
+  <!-- Scripts: Lenis smooth scroll + GSAP animations (CDN, graceful fallback to vanilla) -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <script src="script.js" defer></script>
+  <script>
+    // Set copyright year
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
+  </script>
+</body>
+
+</html>

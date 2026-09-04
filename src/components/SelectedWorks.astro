@@ -1,0 +1,92 @@
+---
+// src/components/SelectedWorks.astro
+
+interface Project {
+  id: string;
+  name: string;
+  industry: string;
+  deliverables: string;
+  year: string;
+  image: string;
+  alt: string;
+}
+
+const projects: Project[] = [
+  {
+    id: 'project-kinetic',
+    name: 'Kinetic Athletics',
+    industry: 'Social Media & Viral Growth',
+    deliverables: 'Paid Social · Short-Form Reels · 14.2x ROAS',
+    year: '2024',
+    image: '/Assets/projects/maison-verde.png',
+    alt: 'Kinetic Athletics Social Media Campaign — High engagement social content and performance video marketing'
+  },
+  {
+    id: 'project-aether',
+    name: 'Aether Tech',
+    industry: 'Search Engine Optimization (SEO)',
+    deliverables: 'Technical SEO · Keyword Dominance · +420% Organic',
+    year: '2024',
+    image: '/Assets/projects/nordkap-finance.png',
+    alt: 'Aether Tech SEO Dominance — Search engine optimization overhaul and technical content architecture'
+  },
+  {
+    id: 'project-lumen',
+    name: 'Lumen Studio',
+    industry: 'Digital Flagship & E-Commerce',
+    deliverables: 'Custom Web Architecture · UX/UI · 4.8% Conv. Rate',
+    year: '2024',
+    image: '/Assets/projects/atelier-beton.png',
+    alt: 'Lumen Flagship Website — Modern conversion-first web design and custom UI/UX system'
+  },
+  {
+    id: 'project-valo',
+    name: 'Valo Capital',
+    industry: 'Performance Marketing & Ads',
+    deliverables: 'Meta & TikTok Ads · Ad Creative · 12M Reach',
+    year: '2023',
+    image: '/Assets/projects/terra-botanica.png',
+    alt: 'Valo Capital Social Ads & Performance Campaign — Creative ad direction and social audience acquisition'
+  }
+];
+---
+
+<!-- Section 5: Selected Works Grid -->
+<section class="works section-border" id="work" aria-label="Selected work">
+  <div class="works__header reveal">
+    <div>
+      <span class="works__label">Selected Work</span>
+      <h2 class="t-heading-1" style="margin-top: 1rem;">
+        Growth systems<br />that <span class="text-gradient-alt">scaled revenue.</span>
+      </h2>
+    </div>
+    <span class="works__label">04 Cases</span>
+  </div>
+
+  <div class="works__grid">
+    {projects.map((project) => (
+      <article class="works__item reveal" id={project.id}>
+        <div class="works__item-image-wrap">
+          <img
+            class="works__item-image"
+            src={project.image}
+            alt={project.alt}
+            loading="lazy"
+          />
+          <div class="works__item-overlay"></div>
+        </div>
+        <div class="works__item-meta">
+          <div class="works__glass-badge">
+            <span class="luminous-dot"></span>
+            <span class="works__glass-badge-text">Case Study</span>
+            <span class="works__glass-arrow">↗</span>
+          </div>
+          <span class="works__item-name">{project.name}</span>
+          <span class="works__item-industry">{project.industry}</span>
+          <span class="works__item-deliverables">{project.deliverables}</span>
+          <span class="works__item-year">{project.year}</span>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
