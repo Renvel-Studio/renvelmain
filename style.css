@@ -955,17 +955,83 @@ button {
    SECTION 4: GRADIENT BANNER & MARQUEE TICKER
    ============================================================ */
 .gradient-banner {
-  background: linear-gradient(135deg, #00ffa3 0%, #39ff14 40%, #dcff50 100%);
-  padding: var(--space-4xl) var(--container-padding);
-  color: #0a0a0c;
+  background: var(--bg-0, #090c13);
+  padding-block: clamp(6rem, 10vw, 14rem);
+  padding-inline: clamp(1rem, 3vw, 4rem);
+  color: var(--ink, #f7f7f9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
-.gradient-banner__content h2 {
-  font-family: var(--font-primary);
-  font-size: clamp(2.8rem, 7vw, 6rem);
-  font-weight: 400;
+.gradient-banner__content {
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.gradient-banner__heading-wrap {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  max-width: 100%;
+}
+
+.gradient-banner__heading {
+  font-family: var(--font-display, serif);
+  font-size: clamp(2.4rem, 5.8vw, 12rem);
+  font-weight: 600;
   letter-spacing: -0.04em;
-  line-height: 1.02;
+  line-height: 1.08;
+  color: var(--ink, #f7f7f9);
+  text-align: center;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+}
+
+.gradient-banner__heading .text-gradient {
+  background: linear-gradient(135deg, #ffc800 0%, #ffdf6d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: none;
+}
+
+.gradient-banner__underline-box {
+  width: 100%;
+  height: clamp(14px, 1.6vw, 24px);
+  margin-block-start: clamp(10px, 1.2vw, 20px);
+  display: block;
+  overflow: visible;
+  position: relative;
+}
+
+.gradient-banner__underline-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.statement-line-path {
+  will-change: stroke-dashoffset;
+}
+
+@media (max-width: 768px) {
+  .gradient-banner__heading {
+    font-size: clamp(1.8rem, 6.8vw, 3.2rem);
+    white-space: normal;
+    text-wrap: balance;
+  }
 }
 
 /* ============================================================

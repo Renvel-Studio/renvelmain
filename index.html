@@ -157,26 +157,16 @@
         </p>
       </div>
 
-      <div class="hero__right reveal reveal-delay-3">
-        <!-- SCHAU & HORCH ROTATING MAGNETIC BADGE WITH CONTACT SMOOTH SCROLL -->
-        <a href="#contact" class="magnetic-badge" id="hero-badge" aria-label="Start a project - Contact Us">
-          <div class="badge-spin">
-            <svg viewBox="-5 -5 110 110" class="badge-svg">
-              <defs>
-                <path id="pathTop" d="M 15, 50 A 35 35 0 0 1 85 50"></path>
-                <path id="pathBottom" d="M 85, 50 A 35 35 0 0 1 15 50"></path>
-              </defs>
-              <text class="badge-text">
-                <textPath href="#pathTop" startOffset="50%" text-anchor="middle">START A PROJECT ·</textPath>
-                <textPath href="#pathBottom" startOffset="50%" text-anchor="middle">TALK WITH US ·</textPath>
-              </text>
+      <div class="hero__badge-wrap reveal reveal-delay-3">
+        <!-- Rounded Rectangle CTA Button placed in the middle above the dropdown line -->
+        <a href="#contact" class="hero__cta-btn" id="hero-cta" aria-label="Start a project - Contact Us">
+          <span class="hero__cta-text">Start a Project</span>
+          <span class="hero__cta-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
             </svg>
-          </div>
-          <div class="badge-arrow">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-              <path d="M7 17L17 7M17 7H7M17 7V17"></path>
-            </svg>
-          </div>
+          </span>
         </a>
       </div>
     </div>
@@ -188,48 +178,127 @@
   </section>
 
   <!-- ============================================================
-       SECTION 3: INTRO MANIFESTO STATEMENT
+       SECTION 3: INTRO MANIFESTO STATEMENT (EDITORIAL ASYMMETRICAL)
        ============================================================ -->
-  <section class="intro section-border" aria-label="Intro Statement">
+  <section class="intro section-border" id="philosophy" aria-label="Intro Statement & Philosophy">
     <div class="container">
-      <h2 class="intro__headline reveal">
-        Where conviction meets strategy,<br>
-        <span class="text-gradient-alt">digital growth is born.</span>
+      <h2 class="intro__headline">
+        <span class="intro__headline-line intro__headline-line--1">Where conviction meets strategy,</span>
+        <span class="intro__headline-line intro__headline-line--2 text-gradient-alt">digital growth is born.</span>
       </h2>
 
-      <div class="intro__grid">
-        <div class="intro__lead reveal reveal-delay-1">
-          <p class="t-body-lg">
-            Brands aren't just logos. They're decisions. Instincts. Digital footprints. But many lose their edge —
-            sounding like everyone, looking like many, and converting no one.
-          </p>
+      <!-- Asymmetrical Two-Column Editorial Layout -->
+      <div class="intro__editorial-grid">
+        <!-- Column Left: Image on Top, Text on Bottom -->
+        <div class="intro__col intro__col--left">
+          <!-- Left Top: Media Card (Clean, Pure Image, No Words) -->
+          <div class="intro__media-card intro__media-card--tilt reveal reveal-delay-1">
+            <div class="intro__media-viewport">
+              <img
+                src="Assets/intro/intro-left.jpg"
+                alt="Monolithic architectural studio environment with subtle lighting"
+                class="intro__image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
+
+          <!-- Left Bottom: Text Card (Smooth Scroll Animated) -->
+          <div class="intro__text-card" data-intro-text>
+            <span class="intro__tag t-mono intro__anim-item">[ 02 — THE EXECUTION ]</span>
+            <h3 class="intro__subheading intro__anim-item">
+              Built for businesses ready to lead while others merely follow.
+            </h3>
+            <div class="intro__text-body">
+              <p class="t-body intro__anim-item">
+                At Renvel Studio, we build digital presence with substance and style. Driven by search intelligence. Defined by design conviction.
+              </p>
+              <p class="t-body intro__anim-item">
+                From full-scale SEO overhauls to high-converting Next.js websites and viral social media campaigns: we craft positionings that don't just look pretty — they perform. High-impact. Long-term. Intentionally edgy.
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="intro__col reveal reveal-delay-2">
-          <p class="t-body">
-            At Renvel Studio, we build digital presence with substance and style. Driven by search intelligence. Defined
-            by design conviction. Built for businesses ready to lead while others merely follow.
-          </p>
-          <p class="t-body" style="margin-top: 1.5rem;">
-            From full-scale SEO overhauls to high-converting Next.js websites and viral social media campaigns: we craft
-            positionings that don't just look pretty — they perform. High-impact. Long-term. Intentionally edgy.
-          </p>
+
+        <!-- Column Right: Text on Top, Image on Bottom -->
+        <div class="intro__col intro__col--right">
+          <!-- Right Top: Text Card (Smooth Scroll Animated) -->
+          <div class="intro__text-card" data-intro-text>
+            <span class="intro__tag t-mono intro__anim-item">[ 01 — THE CONVICTION ]</span>
+            <h3 class="intro__subheading intro__anim-item">
+              Brands aren't just logos. They're decisions. Instincts. Digital footprints.
+            </h3>
+            <div class="intro__text-body">
+              <p class="t-body-lg intro__lead-text intro__anim-item">
+                Many lose their edge — sounding like everyone, looking like many, and converting no one.
+              </p>
+              <p class="t-body intro__anim-item">
+                Social, SEO, Digital Flagships. Anything but ordinary. We don't chase vanity metrics; we build digital legacies. Because impact beats simple visibility every single time.
+              </p>
+            </div>
+          </div>
+
+          <!-- Right Bottom: Media Card (Clean, Pure Image, No Words) -->
+          <div class="intro__media-card intro__media-card--tilt reveal reveal-delay-2">
+            <div class="intro__media-viewport">
+              <img
+                src="Assets/intro/intro-right.jpg"
+                alt="Prismatic chrome geometric sculpture reflections"
+                class="intro__image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </div>
         </div>
-        <div class="intro__col reveal reveal-delay-3">
-          <p class="t-body">
-            Social, SEO, Digital Flagships. Anything but ordinary. We don't chase vanity metrics; we build digital
-            legacies. Because impact beats simple visibility every single time.
-          </p>
+      </div>
+
+      <!-- Full-Width Panoramic Showcase Below (Clean, Pure Image, No Words) -->
+      <div class="intro__panoramic-card reveal reveal-delay-3">
+        <div class="intro__media-viewport intro__media-viewport--pano">
+          <img
+            src="Assets/intro/intro-panoramic.jpg"
+            alt="Cinematic wide-angle digital flagship installation and agency showroom"
+            class="intro__image intro__image--pano"
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       SECTION 4: NEON GRADIENT BANNER & INFINITE TICKER
-       ============================================================ -->
   <section class="gradient-banner" aria-label="Vibrant Banner">
     <div class="gradient-banner__content reveal">
-      <h2>Too bold to<br>remain a briefing.</h2>
+      <div class="gradient-banner__heading-wrap">
+        <h2 class="gradient-banner__heading">
+          Too bold to <span class="text-gradient">remain a briefing.</span>
+        </h2>
+        <div class="gradient-banner__underline-box" aria-hidden="true">
+          <svg class="gradient-banner__underline-svg" viewBox="0 0 1000 24" fill="none" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="statement-line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#ffc800" stop-opacity="0.2" />
+                <stop offset="25%" stop-color="#ffc800" stop-opacity="0.95" />
+                <stop offset="70%" stop-color="#ffdf6d" stop-opacity="1" />
+                <stop offset="100%" stop-color="#ffc800" stop-opacity="0.85" />
+              </linearGradient>
+              <filter id="statement-glow" x="-10%" y="-100%" width="120%" height="300%">
+                <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#ffc800" flood-opacity="0.5" />
+              </filter>
+            </defs>
+            <path
+              class="statement-line-path"
+              d="M 5 12 Q 250 17, 500 12 T 995 12"
+              stroke="url(#statement-line-grad)"
+              stroke-width="5"
+              stroke-linecap="round"
+              filter="url(#statement-glow)"
+            />
+          </svg>
+        </div>
+      </div>
     </div>
   </section>
 

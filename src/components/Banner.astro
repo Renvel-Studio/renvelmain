@@ -5,6 +5,33 @@
 <!-- Section 4: Editorial Statement Banner -->
 <section class="gradient-banner" aria-label="Editorial Statement Banner">
   <div class="gradient-banner__content reveal">
-    <h2>Too bold to<br /><span class="text-gradient">remain a briefing.</span></h2>
+    <div class="gradient-banner__heading-wrap">
+      <h2 class="gradient-banner__heading">
+        Too bold to <span class="text-gradient">remain a briefing.</span>
+      </h2>
+      <div class="gradient-banner__underline-box" aria-hidden="true">
+        <svg class="gradient-banner__underline-svg" viewBox="0 0 1000 24" fill="none" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="statement-line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#ffc800" stop-opacity="0.2" />
+              <stop offset="25%" stop-color="#ffc800" stop-opacity="0.95" />
+              <stop offset="70%" stop-color="#ffdf6d" stop-opacity="1" />
+              <stop offset="100%" stop-color="#ffc800" stop-opacity="0.85" />
+            </linearGradient>
+            <filter id="statement-glow" x="-10%" y="-100%" width="120%" height="300%">
+              <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#ffc800" flood-opacity="0.5" />
+            </filter>
+          </defs>
+          <path
+            class="statement-line-path"
+            d="M 5 12 Q 250 17, 500 12 T 995 12"
+            stroke="url(#statement-line-grad)"
+            stroke-width="5"
+            stroke-linecap="round"
+            filter="url(#statement-glow)"
+          />
+        </svg>
+      </div>
+    </div>
   </div>
 </section>

@@ -242,11 +242,33 @@ function initHeroEntrance() {
     { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: 'power3.out', delay: 0.6, clearProps: 'transform' });
 }
 
-/* -----------------------------------------------------------
-   PREMIUM PARALLAX — subtle GSAP ScrollTrigger touches
-   ----------------------------------------------------------- */
 function initPremiumParallax() {
-  if (prefersReducedMotion || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  const statementLine = document.querySelector('.statement-line-path');
+  const statementBanner = document.querySelector('.gradient-banner');
+  if (statementLine) {
+    const pathLength = statementLine.getTotalLength ? statementLine.getTotalLength() : 1000;
+    statementLine.style.strokeDasharray = `${pathLength}`;
+    if (prefersReducedMotion) {
+      statementLine.style.strokeDashoffset = '0';
+    } else {
+      statementLine.style.strokeDashoffset = `${pathLength}`;
+      if (statementBanner) {
+        gsap.to(statementLine, {
+          strokeDashoffset: 0,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: statementBanner,
+            start: 'top 80%',
+            end: 'center 45%',
+            scrub: 1.2
+          }
+        });
+      }
+    }
+  }
+
+  if (prefersReducedMotion) return;
   try {
     gsap.to('.gradient-banner__content', {
       y: -40, ease: 'none',
@@ -634,11 +656,57 @@ function initNavScrollBehavior() {
   const nav = document.querySelector('.nav');
   if (!nav) return;
 
-  const onScroll = () => {
-    nav.classList.toggle('is-scrolled', window.scrollY > 40);
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  if (typeof ScrollTrigger === 'undefined') {
+    const onScroll = () => {
+      const isScrolled = window.scrollY > 40;
+      nav.classList.toggle('is-scrolled', isScrolled);
+      if (window.innerWidth > 768) {
+        nav.style.maxWidth = isScrolled ? '45vw' : '60vw';
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return;
+  }
+
+  ScrollTrigger.create({
+    start: 'top top',
+    end: '+=260',
+    scrub: 0.8,
+    onUpdate: (self) => {
+      const p = self.progress;
+      if (window.innerWidth > 768) {
+        const ease = 1 - Math.pow(1 - p, 3);
+        const targetWidth = 60 - (15 * ease);
+        nav.style.maxWidth = `${targetWidth.toFixed(2)}vw`;
+      } else {
+        nav.style.maxWidth = '92vw';
+      }
+
+      if (p > 0.05) {
+        nav.classList.add('is-scrolled');
+      } else {
+        nav.classList.remove('is-scrolled');
+      }
+    },
+    onLeaveBack: () => {
+      nav.classList.remove('is-scrolled');
+      if (window.innerWidth > 768) {
+        nav.style.maxWidth = '60vw';
+      } else {
+        nav.style.maxWidth = '92vw';
+      }
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth <= 768) {
+      nav.style.maxWidth = '92vw';
+    } else {
+      const isScrolled = nav.classList.contains('is-scrolled');
+      nav.style.maxWidth = isScrolled ? '45vw' : '60vw';
+    }
+  }, { passive: true });
 }
 
 /* -----------------------------------------------------------
