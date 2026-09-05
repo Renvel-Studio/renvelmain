@@ -248,12 +248,6 @@ function initHeroEntrance() {
 function initPremiumParallax() {
   if (prefersReducedMotion || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
   try {
-    gsap.utils.toArray('.works__item-image').forEach((img) => {
-      gsap.fromTo(img, { yPercent: -6, scale: 1.12 }, {
-        yPercent: 6, scale: 1.12, ease: 'none',
-        scrollTrigger: { trigger: img.closest('.works__item'), scrub: true, start: 'top bottom', end: 'bottom top' }
-      });
-    });
     gsap.to('.gradient-banner__content', {
       y: -40, ease: 'none',
       scrollTrigger: { trigger: '.gradient-banner', scrub: true, start: 'top bottom', end: 'bottom top' }
@@ -549,7 +543,7 @@ function initCursorFollower() {
     if (isOverCase && follower) {
       followerX = lerp(followerX, mouseX, 0.15);
       followerY = lerp(followerY, mouseY, 0.15);
-      follower.style.transform = `translate(${followerX - 60}px, ${followerY - 60}px)`;
+      follower.style.transform = `translate3d(${followerX - 60}px, ${followerY - 60}px, 0) scale(${isOverCase ? 1 : 0.3})`;
     }
     requestAnimationFrame(animateFollower);
   }
@@ -583,7 +577,10 @@ function initCursorFollower() {
     item.addEventListener('mouseleave', () => {
       isOverCase = false;
       if (dot) dot.classList.remove('is-hidden');
-      if (follower) follower.classList.remove('is-active');
+      if (follower) {
+        follower.classList.remove('is-active');
+        follower.style.transform = `translate3d(${followerX - 60}px, ${followerY - 60}px, 0) scale(0.3)`;
+      }
     });
   });
 }

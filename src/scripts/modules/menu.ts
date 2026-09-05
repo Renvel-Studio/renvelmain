@@ -114,17 +114,59 @@ export function initSiteMenu(prefersReducedMotion: boolean): void {
     }
   });
 
-  // Magnetic hover pull for burger button
+  // Magnetic hover pull for burger button (works seamlessly both when closed & open)
   if (!('ontouchstart' in window)) {
-    burger.addEventListener('mousemove', (e) => {
+    const MAGNETIC_RADIUS = 42; // activates only when cursor is close to button
+    const PULL_FACTOR = 0.22;   // subtle attraction ratio
+    const MAX_DISPLACEMENT = 9; // maximum travel distance in px so it never moves excessively
+    let currentX = 0;
+    let currentY = 0;
+    let isTracking = false;
+
+    const resetBurger = () => {
+      if (!isTracking && currentX === 0 && currentY === 0) return;
+      isTracking = false;
+      currentX = 0;
+      currentY = 0;
+      gsap.to(burger, {
+        x: 0,
+        y: 0,
+        duration: 0.4,
+        ease: 'power2.out',
+        overwrite: 'auto'
+      });
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      // Calculate stationary center of burger button (subtract current GSAP translation)
       const rect = burger.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      burger.style.transform = `translate(${x * 0.4}px, ${y * 0.4}px)`;
-    });
-    burger.addEventListener('mouseleave', () => {
-      burger.style.transform = 'translate(0, 0)';
-    });
+      const untransformedCenterX = rect.left - currentX + rect.width / 2;
+      const untransformedCenterY = rect.top - currentY + rect.height / 2;
+
+      const deltaX = e.clientX - untransformedCenterX;
+      const deltaY = e.clientY - untransformedCenterY;
+      const distance = Math.hypot(deltaX, deltaY);
+
+      if (distance < MAGNETIC_RADIUS) {
+        isTracking = true;
+        const targetX = Math.max(-MAX_DISPLACEMENT, Math.min(MAX_DISPLACEMENT, deltaX * PULL_FACTOR));
+        const targetY = Math.max(-MAX_DISPLACEMENT, Math.min(MAX_DISPLACEMENT, deltaY * PULL_FACTOR));
+        currentX = targetX;
+        currentY = targetY;
+        gsap.to(burger, {
+          x: currentX,
+          y: currentY,
+          duration: 0.28,
+          ease: 'power2.out',
+          overwrite: 'auto'
+        });
+      } else if (isTracking) {
+        resetBurger();
+      }
+    };
+
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    document.addEventListener('mouseleave', resetBurger);
   }
 }
 

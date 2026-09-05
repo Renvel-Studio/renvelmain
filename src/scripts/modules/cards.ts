@@ -77,24 +77,6 @@ export function initStickyCardStack(): void {
 export function initPremiumParallax(prefersReducedMotion: boolean): void {
   if (prefersReducedMotion) return;
   try {
-    gsap.utils.toArray<HTMLElement>('.works__item-image').forEach((img) => {
-      gsap.fromTo(
-        img,
-        { yPercent: -6, scale: 1.12 },
-        {
-          yPercent: 6,
-          scale: 1.12,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: img.closest('.works__item') ?? img,
-            scrub: true,
-            start: 'top bottom',
-            end: 'bottom top'
-          }
-        }
-      );
-    });
-
     gsap.to('.gradient-banner__content', {
       y: -40,
       ease: 'none',

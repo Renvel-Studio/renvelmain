@@ -44,7 +44,7 @@ export function initCursorFollower(): void {
     }
     followerX = lerp(followerX, mouseX, 0.15);
     followerY = lerp(followerY, mouseY, 0.15);
-    follower.style.transform = `translate(${followerX - 60}px, ${followerY - 60}px)`;
+    follower.style.transform = `translate3d(${followerX - 60}px, ${followerY - 60}px, 0) scale(${isOverCase ? 1 : 0.3})`;
     followerRafId = requestAnimationFrame(tickFollower);
   }
 
@@ -92,7 +92,10 @@ export function initCursorFollower(): void {
       isOverCase = false;
       stopFollower();
       if (dot) dot.classList.remove('is-hidden');
-      if (follower) follower.classList.remove('is-active');
+      if (follower) {
+        follower.classList.remove('is-active');
+        follower.style.transform = `translate3d(${followerX - 60}px, ${followerY - 60}px, 0) scale(0.3)`;
+      }
     });
   });
 }

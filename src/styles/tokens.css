@@ -4,25 +4,25 @@
    ============================================================ */
 
 :root {
-  /* --- Approved 8-Color Palette (Refined Optical Contrast) --- */
-  --bg-0: #08080a;
-  --bg-1: #111115;
-  --bg-2: #17171f;
-  --line: #212128;
+  /* --- Approved 8-Color Palette (Option 2: Midnight Slate / Deep Indigo Obsidian) --- */
+  --bg-0: #090c13;
+  --bg-1: #101522;
+  --bg-2: #171e30;
+  --line: #1c2438;
   --ink: #f7f7f9;
-  --ink-2: #9e9eb0;
-  --ink-3: #6b6b7a;
+  --ink-2: #9ea4be;
+  --ink-3: #686f8a;
   --amber: #ffc800;
   --blue: #0055ff;
   --blue-lt: #4a8bff;
 
   /* RGB Triplets for Alpha Blending */
-  --bg-0-rgb: 8, 8, 10;
-  --bg-1-rgb: 17, 17, 21;
-  --bg-2-rgb: 23, 23, 31;
-  --line-rgb: 33, 33, 40;
+  --bg-0-rgb: 9, 12, 19;
+  --bg-1-rgb: 16, 21, 34;
+  --bg-2-rgb: 23, 30, 48;
+  --line-rgb: 28, 36, 56;
   --ink-rgb: 247, 247, 249;
-  --ink-2-rgb: 158, 158, 176;
+  --ink-2-rgb: 158, 164, 190;
   --amber-rgb: 255, 200, 0;
   --blue-rgb: 0, 85, 255;
   --blue-lt-rgb: 74, 139, 255;
