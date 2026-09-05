@@ -116,9 +116,9 @@ export function initSiteMenu(prefersReducedMotion: boolean): void {
 
   // Magnetic hover pull for burger button (works seamlessly both when closed & open)
   if (!('ontouchstart' in window)) {
-    const MAGNETIC_RADIUS = 42; // activates only when cursor is close to button
-    const PULL_FACTOR = 0.22;   // subtle attraction ratio
-    const MAX_DISPLACEMENT = 9; // maximum travel distance in px so it never moves excessively
+    const MAGNETIC_RADIUS = 48; // tuned for text menu button
+    const PULL_FACTOR = 0.2;    // subtle attraction ratio
+    const MAX_DISPLACEMENT = 8; // maximum travel distance in px
     let currentX = 0;
     let currentY = 0;
     let isTracking = false;

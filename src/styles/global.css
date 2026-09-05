@@ -111,7 +111,7 @@
 .nav__logo {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.85rem;
   font-family: var(--font-primary);
   font-weight: 700;
   font-size: var(--fs-md);
@@ -122,14 +122,19 @@
 }
 
 .nav__logo-icon {
-  width: 24px;
-  height: 24px;
-  color: var(--amber);
-  transition: transform 0.4s var(--ease-out);
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+  transition:
+    transform 0.35s var(--ease-out),
+    filter 0.35s var(--ease-out);
 }
 
 .nav__logo:hover .nav__logo-icon {
-  transform: rotate(60deg) scale(1.1);
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 12px rgba(var(--blue-rgb), 0.75));
 }
 
 .nav__right {
@@ -138,58 +143,98 @@
   gap: 1rem;
 }
 
-/* Plain burger button (no circle) */
-.nav__burger {
-  width: 40px;
-  height: 32px;
-  background: transparent;
-  border: none;
+/* Navigation Menu Text Button with Rolling Text Animation */
+.nav__menu-btn {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
   display: inline-flex;
-  flex-direction: column;
-  align-items: end;
+  align-items: center;
   justify-content: center;
-  gap: 7px;
   cursor: pointer;
   position: relative;
   z-index: 3001;
-  padding-block: 4px;
-  padding-inline: 0;
+  padding: 6px 12px;
+  color: var(--ink);
+  font-family: var(--font-primary);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  will-change: transform;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  height: 36px;
+  line-height: 1;
+}
+
+.nav__menu-btn::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+}
+
+.nav__menu-roller {
+  display: block;
+  height: 1.25em;
+  line-height: 1.25em;
+  overflow: hidden;
+  position: relative;
+  pointer-events: none;
+}
+
+.nav__menu-track {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
 }
 
-.nav__burger::before {
-  content: '';
-  position: absolute;
-  inset: -12px;
+.nav__menu-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.25em;
+  line-height: 1.25em;
+  white-space: nowrap;
+  transition: color 0.25s ease;
+  color: var(--ink);
 }
 
-.nav__burger:hover .nav__burger-line {
-  background: var(--amber);
+/* On hover, second line rolls in with amber accent */
+.nav__menu-track .nav__menu-text:nth-child(2) {
+  color: var(--amber);
 }
 
-.nav__burger-line {
-  display: block;
-  width: 28px;
-  height: 2px;
-  background: var(--ink);
-  transition:
-    transform 0.4s var(--ease-out),
-    width 0.3s ease,
-    background 0.3s ease;
+.nav__menu-btn:hover .nav__menu-track {
+  transform: translateY(-50%);
 }
 
-.nav__burger-line:nth-child(2) {
-  width: 20px;
+/* Track toggling: closed (Menu -> Open) vs open (Close -> Close) */
+.nav__menu-track--open {
+  display: none;
 }
 
-.nav__burger.is-open .nav__burger-line:nth-child(1) {
-  transform: translateY(4.5px) rotate(45deg);
-  width: 28px;
+.nav__menu-track--closed {
+  display: flex;
 }
 
-.nav__burger.is-open .nav__burger-line:nth-child(2) {
-  transform: translateY(-4.5px) rotate(-45deg);
-  width: 28px;
+.nav__menu-btn.is-open .nav__menu-track--closed {
+  display: none;
+}
+
+.nav__menu-btn.is-open .nav__menu-track--open {
+  display: flex;
+}
+
+.nav__menu-btn.is-open .nav__menu-track--open .nav__menu-text {
+  color: var(--ink);
+}
+
+.nav__menu-btn.is-open:hover .nav__menu-track--open .nav__menu-text:nth-child(2) {
+  color: var(--amber);
 }
 
 /* Backwards compatibility if old class lingers */
