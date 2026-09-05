@@ -661,7 +661,7 @@ function initNavScrollBehavior() {
       const isScrolled = window.scrollY > 40;
       nav.classList.toggle('is-scrolled', isScrolled);
       if (window.innerWidth > 768) {
-        nav.style.maxWidth = isScrolled ? '45vw' : '60vw';
+        nav.style.maxWidth = isScrolled ? '22.5vw' : '60vw';
       }
     };
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -677,7 +677,7 @@ function initNavScrollBehavior() {
       const p = self.progress;
       if (window.innerWidth > 768) {
         const ease = 1 - Math.pow(1 - p, 3);
-        const targetWidth = 60 - (15 * ease);
+        const targetWidth = 60 - (37.5 * ease);
         nav.style.maxWidth = `${targetWidth.toFixed(2)}vw`;
       } else {
         nav.style.maxWidth = '92vw';
@@ -704,7 +704,7 @@ function initNavScrollBehavior() {
       nav.style.maxWidth = '92vw';
     } else {
       const isScrolled = nav.classList.contains('is-scrolled');
-      nav.style.maxWidth = isScrolled ? '45vw' : '60vw';
+      nav.style.maxWidth = isScrolled ? '22.5vw' : '60vw';
     }
   }, { passive: true });
 }

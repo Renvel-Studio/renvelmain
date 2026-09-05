@@ -98,7 +98,7 @@ export function initNavScrollBehavior(): void {
       const isScrolled = window.scrollY > 40;
       nav.classList.toggle('is-scrolled', isScrolled);
       if (window.innerWidth > 768) {
-        nav.style.maxWidth = isScrolled ? '45vw' : '60vw';
+        nav.style.maxWidth = isScrolled ? '22.5vw' : '60vw';
       }
     };
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -106,7 +106,7 @@ export function initNavScrollBehavior(): void {
     return;
   }
 
-  // Progressive ScrollTrigger from 60vw down to 45vw
+  // Progressive ScrollTrigger from 60vw down to 22.5vw (half of 45vw)
   ScrollTrigger.create({
     start: 'top top',
     end: '+=260',
@@ -116,7 +116,7 @@ export function initNavScrollBehavior(): void {
       if (window.innerWidth > 768) {
         // Cubic bezier easing curve: 1 - Math.pow(1 - p, 3)
         const ease = 1 - Math.pow(1 - p, 3);
-        const targetWidth = 60 - (15 * ease); // 60vw -> 45vw
+        const targetWidth = 60 - (37.5 * ease); // 60vw -> 22.5vw
         nav.style.maxWidth = `${targetWidth.toFixed(2)}vw`;
       } else {
         nav.style.maxWidth = '92vw';
@@ -144,7 +144,7 @@ export function initNavScrollBehavior(): void {
       nav.style.maxWidth = '92vw';
     } else {
       const isScrolled = nav.classList.contains('is-scrolled');
-      nav.style.maxWidth = isScrolled ? '45vw' : '60vw';
+      nav.style.maxWidth = isScrolled ? '22.5vw' : '60vw';
     }
   }, { passive: true });
 }
