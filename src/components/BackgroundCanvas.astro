@@ -2,5 +2,213 @@
 // src/components/BackgroundCanvas.astro
 ---
 
-<!-- Clean Subtle Editorial Background: Film Grain Overlay only -->
-<div class="grain-overlay" aria-hidden="true"></div>
+<!-- Living Dynamic Canvas: Organic Moving Yellow Fluid Objects & Ambient Light Engine -->
+<div class="ambient-canvas" aria-hidden="true">
+  <!-- Primary Moving Radiant Yellow Fluid Orb -->
+  <div class="ambient-orb ambient-orb--yellow-hero"></div>
+
+  <!-- Secondary Warm Golden Fluid Mesh -->
+  <div class="ambient-orb ambient-orb--amber-drift"></div>
+
+  <!-- Deep Azure Contrast Accent Pool -->
+  <div class="ambient-orb ambient-orb--azure-accent"></div>
+
+  <!-- Interactive Golden Cursor Luminescence (Follows Pointer Smoothly) -->
+  <div class="ambient-orb ambient-orb--interactive" id="ambient-interactive-orb"></div>
+
+  <!-- Cinema-Grade Tactile Film Grain Overlay -->
+  <div class="grain-overlay"></div>
+</div>
+
+<style>
+  .ambient-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+    background: var(--bg-0);
+  }
+
+  /* Base Fluid Orb Properties */
+  .ambient-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    will-change: transform, border-radius, opacity;
+    pointer-events: none;
+  }
+
+  /* 1. Primary Moving Radiant Yellow Orb — Center/Hero Focus */
+  .ambient-orb--yellow-hero {
+    top: -10vh;
+    left: 20vw;
+    width: 65vw;
+    height: 65vw;
+    max-width: 950px;
+    max-height: 950px;
+    background: radial-gradient(
+      circle at 45% 45%,
+      rgba(255, 200, 0, 0.45) 0%,
+      rgba(255, 180, 0, 0.28) 35%,
+      rgba(255, 140, 0, 0.12) 60%,
+      transparent 75%
+    );
+    opacity: 0.85;
+    animation: floatMorphYellow 22s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+  }
+
+  /* 2. Secondary Warm Amber Drift Orb — Flows across Mid-Page */
+  .ambient-orb--amber-drift {
+    top: 40vh;
+    right: -10vw;
+    width: 55vw;
+    height: 55vw;
+    max-width: 800px;
+    max-height: 800px;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 190, 0, 0.35) 0%,
+      rgba(255, 150, 0, 0.20) 40%,
+      transparent 70%
+    );
+    opacity: 0.75;
+    animation: floatMorphAmber 28s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+  }
+
+  /* 3. Deep Azure Chromatic Counter-Accent */
+  .ambient-orb--azure-accent {
+    bottom: -15vh;
+    left: -8vw;
+    width: 50vw;
+    height: 50vw;
+    max-width: 700px;
+    max-height: 700px;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(0, 85, 255, 0.25) 0%,
+      rgba(74, 139, 255, 0.12) 45%,
+      transparent 70%
+    );
+    opacity: 0.65;
+    animation: floatMorphAzure 25s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+  }
+
+  /* 4. Interactive Golden Cursor Glow */
+  .ambient-orb--interactive {
+    top: 0;
+    left: 0;
+    width: 42vw;
+    height: 42vw;
+    max-width: 600px;
+    max-height: 600px;
+    background: radial-gradient(
+      circle,
+      rgba(255, 200, 0, 0.22) 0%,
+      rgba(255, 160, 0, 0.08) 50%,
+      transparent 70%
+    );
+    opacity: 0.8;
+    filter: blur(80px);
+    transform: translate3d(50vw, 40vh, 0) translate(-50%, -50%);
+    transition: opacity 0.4s ease;
+  }
+
+  /* Organic Fluid Morphing & Orbit Keyframes */
+  @keyframes floatMorphYellow {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    }
+    33% {
+      transform: translate3d(6vw, 8vh, 0) scale(1.08) rotate(45deg);
+      border-radius: 40% 60% 60% 40% / 40% 60% 30% 70%;
+    }
+    66% {
+      transform: translate3d(-5vw, 14vh, 0) scale(0.94) rotate(90deg);
+      border-radius: 50% 50% 30% 70% / 70% 40% 60% 40%;
+    }
+    100% {
+      transform: translate3d(8vw, 4vh, 0) scale(1.05) rotate(135deg);
+      border-radius: 60% 40% 50% 50% / 50% 50% 60% 40%;
+    }
+  }
+
+  @keyframes floatMorphAmber {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+      border-radius: 40% 60% 50% 50% / 50% 40% 60% 50%;
+    }
+    50% {
+      transform: translate3d(-10vw, -12vh, 0) scale(1.12) rotate(-60deg);
+      border-radius: 60% 40% 40% 60% / 60% 50% 50% 40%;
+    }
+    100% {
+      transform: translate3d(-4vw, 8vh, 0) scale(0.95) rotate(-120deg);
+      border-radius: 45% 55% 60% 40% / 50% 60% 40% 50%;
+    }
+  }
+
+  @keyframes floatMorphAzure {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(8vw, -6vh, 0) scale(1.1);
+    }
+    100% {
+      transform: translate3d(4vw, 5vh, 0) scale(0.95);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ambient-orb {
+      animation: none !important;
+    }
+    .ambient-orb--interactive {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  // Silky Smooth Interactive Mouse Follower
+  const interactiveOrb = document.getElementById('ambient-interactive-orb');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (interactiveOrb && !prefersReduced && window.innerWidth > 768) {
+    let mouseX = window.innerWidth * 0.5;
+    let mouseY = window.innerHeight * 0.4;
+    let currentX = mouseX;
+    let currentY = mouseY;
+    let isVisible = true;
+    let rafId: number;
+
+    const onMouseMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!isVisible) {
+        isVisible = true;
+        interactiveOrb.style.opacity = '0.8';
+      }
+    };
+
+    const onMouseLeave = () => {
+      isVisible = false;
+      interactiveOrb.style.opacity = '0';
+    };
+
+    const update = () => {
+      currentX += (mouseX - currentX) * 0.055;
+      currentY += (mouseY - currentY) * 0.055;
+      interactiveOrb.style.transform = `translate3d(${currentX.toFixed(1)}px, ${currentY.toFixed(1)}px, 0) translate(-50%, -50%)`;
+      rafId = requestAnimationFrame(update);
+    };
+
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    document.addEventListener('mouseleave', onMouseLeave, { passive: true });
+    update();
+  }
+</script>

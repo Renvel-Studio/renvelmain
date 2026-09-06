@@ -4,28 +4,45 @@
    ============================================================ */
 
 :root {
-  /* --- Approved 8-Color Palette (Option 2: Midnight Slate / Deep Indigo Obsidian) --- */
-  --bg-0: #090c13;
-  --bg-1: #101522;
-  --bg-2: #171e30;
-  --line: #1c2438;
+  /* --- Master Editorial Palette: Midnight Obsidian & Radiant Yellow --- */
+  --bg-0: #080b12;
+  --bg-1: #0e1424;
+  --bg-2: #161e32;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-hover: rgba(255, 255, 255, 0.18);
+  --line-amber: rgba(255, 200, 0, 0.28);
   --ink: #f7f7f9;
-  --ink-2: #9ea4be;
-  --ink-3: #686f8a;
+  --ink-2: #a4adc8;
+  --ink-3: #6f7895;
+
+  /* Radiant Yellow & Amber Signature Accent */
   --amber: #ffc800;
+  --amber-bright: #ffe14d;
+  --amber-warm: #ff9e00;
+  --amber-glow: rgba(255, 200, 0, 0.35);
+  --amber-glow-soft: rgba(255, 200, 0, 0.12);
+
+  /* Electric Azure Dual-Tone Counterpart */
   --blue: #0055ff;
   --blue-lt: #4a8bff;
 
+  /* Dark Ink for high-contrast text on yellow badges/buttons */
+  --ink-dark: #0a0c14;
+  --ink-dark-2: #242838;
+  --ink-dark-3: #4a4d5a;
+
   /* RGB Triplets for Alpha Blending */
-  --bg-0-rgb: 9, 12, 19;
-  --bg-1-rgb: 16, 21, 34;
-  --bg-2-rgb: 23, 30, 48;
-  --line-rgb: 28, 36, 56;
+  --bg-0-rgb: 8, 11, 18;
+  --bg-1-rgb: 14, 20, 36;
+  --bg-2-rgb: 22, 30, 50;
+  --line-rgb: 255, 255, 255;
   --ink-rgb: 247, 247, 249;
-  --ink-2-rgb: 158, 164, 190;
+  --ink-2-rgb: 164, 173, 200;
   --amber-rgb: 255, 200, 0;
+  --amber-warm-rgb: 255, 158, 0;
   --blue-rgb: 0, 85, 255;
   --blue-lt-rgb: 74, 139, 255;
+  --ink-dark-rgb: 10, 12, 20;
 
   /* --- Font Families --- */
   --font-display: "Fraunces", serif;
