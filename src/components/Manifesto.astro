@@ -1,46 +1,9 @@
 ---
 // src/components/Manifesto.astro
-
-interface Stat {
-  number: string;
-  label: string;
-  description: string;
-  delayClass?: string;
-}
-
-const stats: Stat[] = [
-  {
-    number: '150M+',
-    label: 'Impressions Generated',
-    description: 'Targeted social media reach and content distribution across global campaigns.'
-  },
-  {
-    number: '+420%',
-    label: 'Organic SEO Traffic Growth',
-    description: 'Average organic search engine growth across client portfolios.',
-    delayClass: 'reveal-delay-1'
-  },
-  {
-    number: '3.8x',
-    label: 'Average Campaign ROAS',
-    description: 'Direct return on ad spend driven by strategic creative and web conversion design.',
-    delayClass: 'reveal-delay-2'
-  }
-];
 ---
 
-<!-- Section 9: Manifesto & Metrics -->
-<section class="manifesto section-border" id="agency" aria-label="Studio manifesto and metrics">
-  <div class="manifesto__stats">
-    {stats.map((stat) => (
-      <div class={`stat reveal ${stat.delayClass || ''}`}>
-        <span class="stat__number">{stat.number}</span>
-        <span class="stat__label">{stat.label}</span>
-        <span class="stat__description">{stat.description}</span>
-      </div>
-    ))}
-  </div>
-
+<!-- Section 9: Studio Manifesto -->
+<section class="manifesto section-border" id="agency" aria-label="Studio manifesto">
   <div class="manifesto__quote reveal">
     <blockquote>
       "We don't chase vanity metrics. We architect digital ecosystems where <span class="text-gradient">social media attention,</span> <span class="text-gradient-alt">search dominance,</span> and <span class="text-gradient-cyan">web conversion</span> compound into market leadership."

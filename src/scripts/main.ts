@@ -18,6 +18,8 @@ import { initNewsletter } from './modules/newsletter';
 import { initCursorFollower } from './modules/cursor';
 import { initStickyCardStack, initPremiumParallax } from './modules/cards';
 import { initFocusHorizontalScroll } from './modules/focus';
+import { initVideoWorks } from './modules/videoWorks';
+import { initStatsCounter } from './modules/statsCounter';
 
 const prefersReducedMotion = window.matchMedia(
   '(prefers-reduced-motion: reduce)'
@@ -52,4 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initStickyCardStack();
   initFocusHorizontalScroll(prefersReducedMotion);
   initPremiumParallax(prefersReducedMotion);
+  initVideoWorks(prefersReducedMotion);
+  initStatsCounter(prefersReducedMotion);
 });

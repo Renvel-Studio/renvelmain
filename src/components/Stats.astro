@@ -1,0 +1,72 @@
+---
+// src/components/Stats.astro
+
+interface Stat {
+  id: string;
+  number: string;
+  targetValue: number;
+  prefix?: string;
+  suffix?: string;
+  decimals?: number;
+  label: string;
+  description: string;
+  delayClass?: string;
+}
+
+const stats: Stat[] = [
+  {
+    id: 'stat-impressions',
+    number: '150M+',
+    targetValue: 150,
+    prefix: '',
+    suffix: 'M+',
+    decimals: 0,
+    label: 'Impressions Generated',
+    description: 'Targeted social media reach and content distribution across global campaigns.'
+  },
+  {
+    id: 'stat-seo',
+    number: '+420%',
+    targetValue: 420,
+    prefix: '+',
+    suffix: '%',
+    decimals: 0,
+    label: 'Organic SEO Traffic Growth',
+    description: 'Average organic search engine growth across client portfolios.',
+    delayClass: 'reveal-delay-1'
+  },
+  {
+    id: 'stat-roas',
+    number: '3.8x',
+    targetValue: 3.8,
+    prefix: '',
+    suffix: 'x',
+    decimals: 1,
+    label: 'Average Campaign ROAS',
+    description: 'Direct return on ad spend driven by strategic creative and web conversion design.',
+    delayClass: 'reveal-delay-2'
+  }
+];
+---
+
+<!-- Section: Proven Impact Metrics (Immediately below Hero) -->
+<section class="stats-section section-border" id="metrics" aria-label="Proven agency impact metrics">
+  <div class="manifesto__stats">
+    {stats.map((stat) => (
+      <div class={`stat reveal ${stat.delayClass || ''}`} id={stat.id}>
+        <span
+          class="stat__number"
+          data-stat-target={stat.targetValue}
+          data-stat-prefix={stat.prefix || ''}
+          data-stat-suffix={stat.suffix || ''}
+          data-stat-decimals={stat.decimals || 0}
+        >
+          {stat.number}
+        </span>
+        <span class="stat__label">{stat.label}</span>
+        <span class="stat__description">{stat.description}</span>
+      </div>
+    ))}
+  </div>
+</section>
+

@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initStickyCardStack();
   initFocusHorizontalScroll();
   initPremiumParallax();
+  initStatsCounter();
 });
 
 /* Global luxury scroll instance (Lenis) shared with anchor + ScrollTrigger */
@@ -876,5 +877,125 @@ function initFocusHorizontalScroll() {
   });
 }
 
+/* -----------------------------------------------------------
+   STATS NUMBER ROLLING COUNTER ANIMATION
+   ----------------------------------------------------------- */
+function initStatsCounter() {
+  const statCards = document.querySelectorAll('.stat');
+  const statNumbers = document.querySelectorAll('.stat__number[data-stat-target]');
+  if (!statNumbers.length || prefersReducedMotion) return;
 
+  const activeRafMap = new WeakMap();
+  const activeTimeoutMap = new WeakMap();
 
+  const cancelActiveRoll = (el) => {
+    const existingRaf = activeRafMap.get(el);
+    if (existingRaf) {
+      cancelAnimationFrame(existingRaf);
+      activeRafMap.delete(el);
+    }
+    const existingTimeout = activeTimeoutMap.get(el);
+    if (existingTimeout) {
+      clearTimeout(existingTimeout);
+      activeTimeoutMap.delete(el);
+    }
+  };
+
+  const rollNumber = (el, duration = 1500, delay = 0) => {
+    cancelActiveRoll(el);
+
+    const target = parseFloat(el.dataset.statTarget || '0');
+    const prefix = el.dataset.statPrefix || '';
+    const suffix = el.dataset.statSuffix || '';
+    const decimals = parseInt(el.dataset.statDecimals || '0', 10);
+
+    const zeroVal = decimals > 0 ? (0).toFixed(decimals) : '0';
+    el.textContent = `${prefix}${zeroVal}${suffix}`;
+
+    const executeRoll = () => {
+      const startTime = performance.now();
+
+      function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+        const current = target * ease;
+        const formattedNumber =
+          decimals > 0 ? current.toFixed(decimals) : Math.round(current).toString();
+
+        el.textContent = `${prefix}${formattedNumber}${suffix}`;
+
+        if (progress < 1) {
+          const rafId = requestAnimationFrame(update);
+          activeRafMap.set(el, rafId);
+        } else {
+          const finalStr =
+            decimals > 0 ? target.toFixed(decimals) : Math.round(target).toString();
+          el.textContent = `${prefix}${finalStr}${suffix}`;
+          el.classList.add('is-finished');
+          activeRafMap.delete(el);
+        }
+      }
+
+      const rafId = requestAnimationFrame(update);
+      activeRafMap.set(el, rafId);
+    };
+
+    if (delay > 0) {
+      const timeoutId = window.setTimeout(() => {
+        activeTimeoutMap.delete(el);
+        executeRoll();
+      }, delay);
+      activeTimeoutMap.set(el, timeoutId);
+    } else {
+      executeRoll();
+    }
+  };
+
+  // Set initial zero values before viewport entry
+  statNumbers.forEach((el) => {
+    const prefix = el.dataset.statPrefix || '';
+    const suffix = el.dataset.statSuffix || '';
+    const decimals = parseInt(el.dataset.statDecimals || '0', 10);
+    const zeroVal = decimals > 0 ? (0).toFixed(decimals) : '0';
+    el.textContent = `${prefix}${zeroVal}${suffix}`;
+  });
+
+  // Attach asynchronous hover re-roll to each individual stat card
+  statCards.forEach((card) => {
+    const numberEl = card.querySelector('.stat__number[data-stat-target]');
+    if (!numberEl) return;
+
+    card.addEventListener('mouseenter', () => {
+      // Re-roll this individual stat asynchronously from 0 to its target
+      rollNumber(numberEl, 1400, 0);
+    });
+  });
+
+  let hasTriggered = false;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasTriggered) {
+          hasTriggered = true;
+          const container = entry.target;
+          const numbers = container.querySelectorAll('.stat__number[data-stat-target]');
+
+          // Stagger each column asynchronously one by one
+          numbers.forEach((el, index) => {
+            const delay = index * 260; // 0ms, 260ms, 520ms stagger
+            rollNumber(el, 1600, delay);
+          });
+
+          observer.unobserve(container);
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  const statsContainer = document.querySelector('.stats-section, .manifesto__stats');
+  if (statsContainer) {
+    observer.observe(statsContainer);
+  }
+}
