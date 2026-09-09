@@ -10,7 +10,7 @@
 - Crawling, indexing, retrieval-augmented answering, citation, and
   recommendation of all public pages are explicitly allowed.
 - Sitemap: https://renvel.studio/sitemap.xml
-- Contact: hello@renvelstudio.com
+- Contact: hello@renvel.studio
 - Social: https://www.instagram.com/renvel.creative
 
 ## Site map

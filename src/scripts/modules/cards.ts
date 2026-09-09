@@ -107,12 +107,12 @@ export function initStickyCardStack(
       trigger: nextCard,
       start: 'top bottom',
       end: () => `top ${getStickyTop(nextCard)}px`,
-      scrub: 0.3,
+      scrub: 0.2,
       invalidateOnRefresh: true,
       onUpdate: self => {
         gsap.set(card, {
-          scale: 1 - self.progress * 0.045,
-          filter: `brightness(${1 - self.progress * 0.12})`
+          scale: 1 - self.progress * 0.04,
+          opacity: 1 - self.progress * 0.18
         });
       }
     });

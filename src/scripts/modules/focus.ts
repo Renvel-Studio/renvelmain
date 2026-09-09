@@ -69,12 +69,31 @@ export function initFocusHorizontalScroll(
       transformStyle: 'preserve-3d'
     });
 
+    // Cache layout metrics to prevent layout thrashing on RAF scroll frames
+    interface TileMetrics {
+      tile: HTMLElement;
+      offsetLeft: number;
+      halfWidth: number;
+    }
+
+    let cachedTileMetrics: TileMetrics[] = [];
+
+    const measureTiles = () => {
+      cachedTileMetrics = tiles.map(tile => ({
+        tile,
+        offsetLeft: tile.offsetLeft,
+        halfWidth: tile.offsetWidth * 0.5
+      }));
+    };
+
+    measureTiles();
+
     // Exact horizontal distance needed to bring the 3rd tile into prime view
     const getScrollDistance = (): number => {
-      const firstTile = tiles[0];
-      const lastTile = tiles[tiles.length - 1];
-      if (!firstTile || !lastTile) return 0;
-      return Math.max(lastTile.offsetLeft - firstTile.offsetLeft, 0);
+      if (cachedTileMetrics.length < 2) return 0;
+      const first = cachedTileMetrics[0];
+      const last = cachedTileMetrics[cachedTileMetrics.length - 1];
+      return Math.max(last.offsetLeft - first.offsetLeft, 0);
     };
 
     let currentActiveIndex = -1;
@@ -100,17 +119,18 @@ export function initFocusHorizontalScroll(
 
     setActiveDiscipline(0);
 
-    // Dynamic 3D rotation & perspective in place
+    // Dynamic 3D rotation & perspective in place (zero layout reflows)
     const updateSpatialRotation = () => {
       const currentStripX = (gsap.getProperty(strip, 'x') as number) || 0;
       const focalPoint = window.innerWidth * 0.44;
+      const halfWindow = window.innerWidth * 0.5;
 
       let minDistance = Infinity;
       let closestIdx = 0;
 
-      tiles.forEach((tile, idx) => {
-        const tileCenter =
-          tile.offsetLeft + currentStripX + tile.offsetWidth * 0.5;
+      for (let idx = 0; idx < cachedTileMetrics.length; idx++) {
+        const metric = cachedTileMetrics[idx];
+        const tileCenter = metric.offsetLeft + currentStripX + metric.halfWidth;
         const distFromFocal = tileCenter - focalPoint;
         const absDist = Math.abs(distFromFocal);
 
@@ -122,16 +142,16 @@ export function initFocusHorizontalScroll(
         const normalizedOffset = gsap.utils.clamp(
           -1.2,
           1.2,
-          distFromFocal / (window.innerWidth * 0.5)
+          distFromFocal / halfWindow
         );
 
-        const rotate2D = normalizedOffset * 2.2;
-        const rotateY = normalizedOffset * 6.5;
-        const zDepth = -Math.abs(normalizedOffset) * 30;
-        const scale = 1 - Math.min(Math.abs(normalizedOffset) * 0.035, 0.05);
-        const opacity = 1 - Math.min(Math.abs(normalizedOffset) * 0.18, 0.25);
+        const rotate2D = normalizedOffset * 1.8;
+        const rotateY = normalizedOffset * 5.0;
+        const zDepth = -Math.abs(normalizedOffset) * 20;
+        const scale = 1 - Math.min(Math.abs(normalizedOffset) * 0.03, 0.04);
+        const opacity = 1 - Math.min(Math.abs(normalizedOffset) * 0.15, 0.2);
 
-        gsap.set(tile, {
+        gsap.set(metric.tile, {
           rotate: rotate2D,
           rotateY: rotateY,
           z: zDepth,
@@ -141,7 +161,7 @@ export function initFocusHorizontalScroll(
           transformOrigin: 'center center',
           overwrite: 'auto'
         });
-      });
+      }
 
       setActiveDiscipline(closestIdx);
     };
@@ -153,14 +173,13 @@ export function initFocusHorizontalScroll(
         pin: true,
         pinSpacing: true,
         pinType: 'fixed',
-        scrub: 1,
+        scrub: 0.3, // Silky 1:1 synchronization with Lenis smooth scroll
         anticipatePin: 1,
         start: 'top top',
-        end: () => `+=${getScrollDistance() + window.innerHeight * 0.75}`,
+        end: () => `+=${getScrollDistance() + window.innerHeight * 1.15}`, // Generous runway for comfortable reading pace
         invalidateOnRefresh: true,
-        fastScrollEnd: true,
-        preventOverlaps: true,
         onRefresh: self => {
+          measureTiles();
           // Type-safe access to internal spacer and HTML pin element
           const typedSelf = self as ScrollTriggerWithSpacer;
           const spacer = typedSelf.spacer;
@@ -189,12 +208,23 @@ export function initFocusHorizontalScroll(
       }
     });
 
-    // Entrance cushion: Title settles calmly (0.00 -> 0.08)
+    // Linear continuous glide across the entire pinned scroll:
+    // Zero deadzones, zero stutter, zero sudden acceleration
+    masterTl.to(
+      strip,
+      {
+        x: () => -getScrollDistance(),
+        duration: 1,
+        ease: 'none'
+      },
+      0
+    );
+
     if (lineOur && lineFocus) {
       masterTl.fromTo(
         [lineOur, lineFocus],
-        { opacity: 0.85, y: 12 },
-        { opacity: 1, y: 0, duration: 0.08, ease: 'power1.out' },
+        { opacity: 0.85, y: 10 },
+        { opacity: 1, y: 0, duration: 0.15, ease: 'power1.out' },
         0
       );
     }
@@ -202,24 +232,10 @@ export function initFocusHorizontalScroll(
       masterTl.fromTo(
         counter,
         { opacity: 0.85 },
-        { opacity: 1, duration: 0.08, ease: 'power1.out' },
+        { opacity: 1, duration: 0.15, ease: 'power1.out' },
         0
       );
     }
-
-    // Active Traverse: Strip slides smoothly (0.08 -> 0.88)
-    masterTl.to(
-      strip,
-      {
-        x: () => -getScrollDistance(),
-        duration: 0.8,
-        ease: 'none'
-      },
-      0.08
-    );
-
-    // Exit Settle Cushion: Card 3 dwells comfortably before unpinning (0.88 -> 1.00)
-    masterTl.to({}, { duration: 0.12 }, 0.88);
 
     const st = masterTl.scrollTrigger!;
 
@@ -247,8 +263,7 @@ export function initFocusHorizontalScroll(
       const glideProgress =
         maxDist > 0 ? gsap.utils.clamp(0, 1, targetOffset / maxDist) : 0;
 
-      const tlFraction = 0.08 + glideProgress * 0.8;
-      const targetScrollY = st.start + tlFraction * totalScroll;
+      const targetScrollY = st.start + glideProgress * totalScroll;
 
       setActiveDiscipline(targetIndex);
 

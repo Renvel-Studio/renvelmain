@@ -1875,11 +1875,10 @@ div.pin-spacer:has(> #focus) {
   align-items: center;
   gap: clamp(1.5rem, 2.5vw, 2.5rem);
   overflow: visible;
-  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.65);
-  transition:
-    border-color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.7);
+  transition: border-color 0.3s ease;
   will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
 .focus-tile::before {
@@ -1889,28 +1888,28 @@ div.pin-spacer:has(> #focus) {
   border-radius: 38px;
   background: radial-gradient(
     ellipse at center,
-    rgba(212, 163, 89, 0.12) 0%,
+    rgba(212, 163, 89, 0.14) 0%,
     rgba(212, 163, 89, 0.03) 55%,
     transparent 75%
   );
   opacity: 0;
-  transform: scale(0.96);
+  transform: scale(0.96) translateZ(0);
   transition:
-    opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 0.35s ease,
+    transform 0.35s ease;
   pointer-events: none;
   z-index: -1;
   filter: blur(18px);
+  will-change: opacity, transform;
 }
 
 .focus-tile.is-active {
-  border-color: rgba(212, 163, 89, 0.28);
-  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.75);
+  border-color: rgba(212, 163, 89, 0.32);
 }
 
 .focus-tile.is-active::before {
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1) translateZ(0);
 }
 
 .focus-tile__content {
@@ -1972,6 +1971,177 @@ div.pin-spacer:has(> #focus) {
 
 .focus-tile:hover .focus-tile__svg {
   transform: translateY(-5px) scale(1.03);
+}
+
+/* Luxury Editorial Lucide Icon Badge */
+.focus-badge {
+  position: relative;
+  width: clamp(210px, 24vw, 260px);
+  height: clamp(210px, 24vw, 260px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.focus-badge__glow {
+  position: absolute;
+  inset: -15%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(212, 163, 89, 0.18) 0%,
+    rgba(212, 163, 89, 0.05) 45%,
+    transparent 72%
+  );
+  filter: blur(18px);
+  pointer-events: none;
+  opacity: 0.8;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+}
+
+.focus-tile:hover .focus-badge__glow {
+  transform: scale(1.15);
+  opacity: 1;
+}
+
+.focus-badge__ring {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.focus-badge__ring--outer {
+  width: clamp(170px, 20vw, 220px);
+  height: clamp(170px, 20vw, 220px);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  transition:
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s ease;
+}
+
+.focus-badge__ring--inner {
+  width: clamp(130px, 15vw, 168px);
+  height: clamp(130px, 15vw, 168px);
+  border: 1px solid rgba(212, 163, 89, 0.22);
+  transition:
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s ease;
+}
+
+.focus-tile:hover .focus-badge__ring--outer {
+  transform: rotate(45deg) scale(1.04);
+  border-color: rgba(212, 163, 89, 0.35);
+}
+
+.focus-tile:hover .focus-badge__ring--inner {
+  transform: rotate(-30deg) scale(1.02);
+  border-color: rgba(212, 163, 89, 0.5);
+}
+
+.focus-badge__crosshair {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.25);
+  line-height: 1;
+  pointer-events: none;
+  transition: color 0.4s ease;
+}
+
+.focus-tile:hover .focus-badge__crosshair {
+  color: var(--amber);
+}
+
+.focus-badge__crosshair--tl { top: 8px; left: 8px; }
+.focus-badge__crosshair--tr { top: 8px; right: 8px; }
+.focus-badge__crosshair--bl { bottom: 8px; left: 8px; }
+.focus-badge__crosshair--br { bottom: 8px; right: 8px; }
+
+.focus-badge__core {
+  position: relative;
+  width: clamp(92px, 11vw, 114px);
+  height: clamp(92px, 11vw, 114px);
+  border-radius: 24px;
+  background: linear-gradient(
+    145deg,
+    rgba(28, 28, 38, 0.96) 0%,
+    rgba(14, 14, 20, 0.98) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--amber-bright);
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    color 0.4s ease;
+}
+
+.focus-tile:hover .focus-badge__core {
+  transform: translateY(-4px) scale(1.06);
+  border-color: rgba(212, 163, 89, 0.45);
+  box-shadow:
+    0 22px 50px rgba(0, 0, 0, 0.8),
+    0 0 28px rgba(212, 163, 89, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.focus-badge__core svg {
+  width: clamp(42px, 5vw, 52px);
+  height: clamp(42px, 5vw, 52px);
+  stroke: currentColor;
+  stroke-width: 1.5;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  transition: transform 0.5s ease;
+}
+
+.focus-tile:hover .focus-badge__core svg {
+  transform: scale(1.08);
+}
+
+.focus-badge__meta {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.75rem;
+  background: rgba(14, 14, 19, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  transition: border-color 0.4s ease, transform 0.4s ease;
+}
+
+.focus-tile:hover .focus-badge__meta {
+  border-color: rgba(212, 163, 89, 0.3);
+  transform: translateY(2px);
+}
+
+.focus-badge__tag {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  color: var(--amber);
+  font-weight: 600;
+}
+
+.focus-badge__spec {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+  text-transform: uppercase;
 }
 
 /* ============================================================
