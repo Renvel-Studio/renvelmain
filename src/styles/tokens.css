@@ -43,11 +43,13 @@
   --blue-rgb: 0, 85, 255;
   --blue-lt-rgb: 74, 139, 255;
   --ink-dark-rgb: 10, 12, 20;
+  --amber-bright-rgb: 255, 225, 77;
 
   /* --- Font Families --- */
-  --font-display: "Fraunces", serif;
-  --font-primary: "Switzer", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: "Fragment Mono", monospace;
+  --font-display: 'Fraunces', serif;
+  --font-primary:
+    'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Fragment Mono', monospace;
 
   /* --- Fluid Typography Scale --- */
   --fs-xs: clamp(0.65rem, 0.62rem + 0.15vw, 0.75rem);

@@ -1,27 +1,51 @@
 ---
-// src/components/Newsletter.astro
 ---
 
-<!-- Section 8: Newsletter / Strategy Audit Callout -->
-<section class="newsletter-section section-border" aria-label="Strategy Audit Callout">
-  <div class="container">
-    <div class="newsletter-card reveal">
-      <div class="newsletter-card__left">
-        <h2>Always one<br /><span class="text-gradient">step ahead.</span></h2>
-        <p>
-          Join our private strategy brief for case studies, algorithm updates, SEO strategies, and the latest trends
-          in digital growth.
-        </p>
-        <span class="t-mono" style="color: var(--ink-2);">NO SPAM. PURE SUBSTANCE.</span>
+<section class="newsletter-section" id="newsletter" aria-labelledby="newsletter-title">
+  <div class="newsletter-card">
+    <div class="newsletter-card__left">
+      <div class="newsletter-card__kicker">
+        <span class="newsletter-card__kicker-dot" aria-hidden="true"></span>
+        <span>Intelligence Dispatch</span>
       </div>
+      <h2 id="newsletter-title" class="newsletter-card__title">
+        Private Growth Insights For Select Partners.
+      </h2>
+      <p class="newsletter-card__desc">
+        Direct, unfiltered teardowns of high-performing creative pipelines, algorithmic shifts, and conversion infrastructure. Dispatched bi-weekly.
+      </p>
+    </div>
 
-      <form class="newsletter-card__form" id="newsletter-form" novalidate>
-        <input type="email" placeholder="Enter your business email" required aria-label="Business Email" />
-        <button type="submit" class="newsletter-btn">
-          <span>Get Strategy Access</span>
-          <div class="btn-dot"></div>
-        </button>
-        <span class="newsletter-success" id="newsletter-success" role="status" aria-live="polite"></span>
+    <div class="newsletter-card__right">
+      <form id="newsletter-form" class="newsletter-card__form" novalidate>
+        <div class="newsletter-card__form-group">
+          <label for="newsletter-email" class="sr-only">Business Email</label>
+          <input
+            type="email"
+            id="newsletter-email"
+            name="email"
+            class="newsletter-card__input"
+            placeholder="Enter your business email"
+            autocomplete="email"
+            required
+          />
+
+          <button
+            type="submit"
+            class="newsletter-card__btn"
+            aria-label="Get Strategy Access"
+          >
+            <span class="newsletter-card__btn-track">
+              <span class="newsletter-card__btn-slider">
+                <span class="newsletter-card__btn-text">Get Strategy Access</span>
+                <span class="newsletter-card__btn-text newsletter-card__btn-text--sub">Get Strategy Access</span>
+              </span>
+            </span>
+          </button>
+        </div>
+
+        <div id="newsletter-success" class="newsletter-card__success" role="status" aria-live="polite"></div>
+        <span class="newsletter-card__disclaimer">Strictly confidential. No spam, zero agency fluff.</span>
       </form>
     </div>
   </div>

@@ -5,7 +5,6 @@ interface ProcessStep {
   index: number;
   id: string;
   themeClass: string;
-  isLight?: boolean;
   title: string;
   subtitle: string;
   image: string;
@@ -17,8 +16,7 @@ const steps: ProcessStep[] = [
   {
     index: 1,
     id: 'process-card-1',
-    themeClass: 'process-card--magenta',
-    isLight: true,
+    themeClass: 'process-card--one',
     title: '01. Understand',
     subtitle: 'Discovery & Search Intelligence',
     image: '/Assets/projects/method-audit.jpg',
@@ -28,7 +26,7 @@ const steps: ProcessStep[] = [
   {
     index: 2,
     id: 'process-card-2',
-    themeClass: 'process-card--blue',
+    themeClass: 'process-card--two',
     title: '02. Sharpen',
     subtitle: 'Strategy & Architecture',
     image: '/Assets/projects/method-position.jpg',
@@ -38,8 +36,7 @@ const steps: ProcessStep[] = [
   {
     index: 3,
     id: 'process-card-3',
-    themeClass: 'process-card--lime',
-    isLight: true,
+    themeClass: 'process-card--three',
     title: '03. Dominate',
     subtitle: 'Execution & Market Scaling',
     image: '/Assets/projects/method-dominate.jpg',
@@ -73,26 +70,40 @@ const steps: ProcessStep[] = [
       </div>
     </div>
 
-    <div class="process__stack" id="process-stack">
+    <div class="process__stack" id="process-stack" itemscope itemtype="https://schema.org/HowTo">
+      <meta itemprop="name" content="Renvel Studio's 3-step growth method" />
       {steps.map((step) => (
         <article
-          class={`process-card ${step.themeClass} ${step.isLight ? 'process-card--light' : ''}`}
+          class={`process-card ${step.themeClass}`}
           id={step.id}
           data-index={step.index}
+          itemprop="step"
+          itemscope
+          itemtype="https://schema.org/HowToStep"
         >
-          <div class="process-card__header">
-            <div class="process-card__title-group">
-              <h3 class="process-card__title">{step.title}</h3>
-              <span class="process-card__subtitle">{step.subtitle}</span>
+          <meta itemprop="position" content={String(step.index)} />
+
+          <!-- Text layer: hidden at rest, GSAP fades it in as the media shrinks into its slot -->
+          <div class="process-card__text-layer">
+            <div class="process-card__header">
+              <div class="process-card__title-group">
+                <h3 class="process-card__title" itemprop="name">{step.title}</h3>
+                <span class="process-card__subtitle">{step.subtitle}</span>
+              </div>
+            </div>
+
+            <!-- Invisible placeholder reserving the media's final layout position/size -->
+            <div class="process-card__media-slot" aria-hidden="true"></div>
+
+            <div class="process-card__body">
+              <p class="process-card__text" itemprop="text">{step.description}</p>
             </div>
           </div>
 
+          <!-- Actual media: absolutely positioned, GSAP animates it from full-card-cover
+               down to the media-slot's position/size as the user scrolls through this card -->
           <div class="process-card__media">
-            <img src={step.image} alt={step.alt} loading="lazy" />
-          </div>
-
-          <div class="process-card__body">
-            <p class="process-card__text">{step.description}</p>
+            <img src={step.image} alt={step.alt} loading="lazy" decoding="async" itemprop="image" />
           </div>
         </article>
       ))}

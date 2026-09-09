@@ -1,120 +1,127 @@
 import { getLenis } from './lenis';
 
-export function initCursorFollower(): void {
-  const dot = document.getElementById('cursor-dot') as HTMLElement | null;
-  const follower = document.getElementById('cursor-follower') as HTMLElement | null;
+export function initCursorFollower(): () => void {
+  // Never run on touch or stylus devices
+  if (window.matchMedia('(pointer: coarse)').matches) {
+    return () => {};
+  }
 
-  // Don't init on touch devices
-  if ('ontouchstart' in window) return;
+  const dot = document.getElementById('cursor-dot');
+  const follower = document.getElementById('cursor-follower');
 
-  let mouseX = 0;
-  let mouseY = 0;
-  let followerX = 0;
-  let followerY = 0;
-  let isOverCase = false;
+  if (!dot && !follower) return () => {};
+
+  // Position coordinates
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let dotX = mouseX;
+  let dotY = mouseY;
+  let followerX = mouseX;
+  let followerY = mouseY;
+
   let isMouseInWindow = false;
+  let isOverCase = false;
+  let isHoveringInteractive = false;
+  let rafId: number | null = null;
 
-  window.addEventListener('mousemove', (e) => {
+  // Linear interpolation for organic spring inertia
+  const lerp = (start: number, end: number, factor: number): number => {
+    return start + (end - start) * factor;
+  };
+
+  // Dedicated RAF animation loop
+  const loop = (): void => {
+    // Dot trails mouse with a natural delay
+    dotX = lerp(dotX, mouseX, 0.2);
+    dotY = lerp(dotY, mouseY, 0.2);
+
+    if (dot) {
+      dot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) translate(-50%, -50%)`;
+    }
+
+    // "Explore Case" follower trails with deeper, heavier damping
+    if (follower && isOverCase) {
+      followerX = lerp(followerX, mouseX, 0.12);
+      followerY = lerp(followerY, mouseY, 0.12);
+      follower.style.transform = `translate3d(${followerX - 60}px, ${followerY - 60}px, 0) scale(1)`;
+    }
+
+    rafId = requestAnimationFrame(loop);
+  };
+
+  const onMouseMove = (e: MouseEvent): void => {
     mouseX = e.clientX;
     mouseY = e.clientY;
 
-    if (dot) {
-      dot.style.left = `${mouseX}px`;
-      dot.style.top = `${mouseY}px`;
-      if (!isMouseInWindow && !isOverCase) {
-        dot.style.opacity = '1';
-        isMouseInWindow = true;
-      }
+    if (!isMouseInWindow) {
+      isMouseInWindow = true;
+      if (dot && !isOverCase) dot.style.opacity = '1';
     }
-  });
 
-  let followerRafId: number | null = null;
+    // Delegated hit-testing for hover states
+    const target = e.target as HTMLElement | null;
+    if (!target) return;
 
-  function lerp(start: number, end: number, factor: number) {
-    return start + (end - start) * factor;
-  }
-
-  function activateFollower() {
-    if (isOverCase) return;
-    isOverCase = true;
-    if (dot) dot.classList.add('is-hidden');
-    if (follower) {
+    // Check project cards for "Explore Case" follower activation
+    const workItem = target.closest('.works__item');
+    if (workItem && !isOverCase) {
+      isOverCase = true;
       followerX = mouseX;
       followerY = mouseY;
-      follower.classList.add('is-active');
-      startFollower();
-    }
-  }
-
-  function deactivateFollower() {
-    if (!isOverCase) return;
-    isOverCase = false;
-    stopFollower();
-    if (dot) dot.classList.remove('is-hidden');
-    if (follower) {
-      follower.classList.remove('is-active');
-      follower.style.transform = `translate3d(${followerX - 60}px, ${followerY - 60}px, 0) scale(0.3)`;
-    }
-  }
-
-  function tickFollower() {
-    if (!isOverCase || !follower) {
-      followerRafId = null;
-      return;
-    }
-
-    // Dynamic hit-test verification for trackpad/smooth scroll
-    if (isMouseInWindow) {
-      const el = document.elementFromPoint(mouseX, mouseY);
-      if (!el || !el.closest('.works__item')) {
-        deactivateFollower();
-        return;
+      if (dot) dot.classList.add('is-hidden');
+      if (follower) follower.classList.add('is-active');
+    } else if (!workItem && isOverCase) {
+      isOverCase = false;
+      if (dot) dot.classList.remove('is-hidden');
+      if (follower) {
+        follower.classList.remove('is-active');
+        follower.style.transform = `translate3d(${followerX - 60}px, ${followerY - 60}px, 0) scale(0.3)`;
       }
     }
 
-    followerX = lerp(followerX, mouseX, 0.15);
-    followerY = lerp(followerY, mouseY, 0.15);
-    follower.style.transform = `translate3d(${followerX - 60}px, ${followerY - 60}px, 0) scale(${isOverCase ? 1 : 0.3})`;
-    followerRafId = requestAnimationFrame(tickFollower);
-  }
-
-  function startFollower() {
-    if (followerRafId === null) {
-      followerRafId = requestAnimationFrame(tickFollower);
-    }
-  }
-
-  function stopFollower() {
-    if (followerRafId !== null) {
-      cancelAnimationFrame(followerRafId);
-      followerRafId = null;
-    }
-  }
-
-  document.addEventListener('mouseleave', () => {
-    isMouseInWindow = false;
-    if (dot) dot.style.opacity = '0';
-    deactivateFollower();
-  });
-
-  // Verify element under cursor during scroll (essential for laptop trackpad scrolling where mouse coordinates don't change)
-  const onScrollCheck = () => {
-    if (!isMouseInWindow) return;
-    const el = document.elementFromPoint(mouseX, mouseY);
-    const item = el ? el.closest('.works__item') : null;
-
-    if (item && !isOverCase) {
-      activateFollower();
-    } else if (!item && isOverCase) {
-      deactivateFollower();
-    }
-
-    if (dot && !item) {
-      const isInteractive = !!(el && el.closest('a, button, .process-card, .focus-tile, .focus-tile-btn'));
-      dot.classList.toggle('is-hovering', isInteractive);
+    // Check links and interactive surfaces
+    const isInteractive = !!target.closest(
+      'a, button, [role="button"], .process-card, .focus-tile, .focus-tile-btn'
+    );
+    if (isInteractive !== isHoveringInteractive) {
+      isHoveringInteractive = isInteractive;
+      if (dot && !isOverCase) {
+        dot.classList.toggle('is-hovering', isHoveringInteractive);
+      }
     }
   };
 
+  const onMouseLeave = (): void => {
+    isMouseInWindow = false;
+    if (dot) dot.style.opacity = '0';
+    if (follower) {
+      follower.classList.remove('is-active');
+      isOverCase = false;
+    }
+  };
+
+  const onScrollCheck = (): void => {
+    if (!isMouseInWindow) return;
+    const el = document.elementFromPoint(mouseX, mouseY);
+    if (!el) return;
+
+    const workItem = el.closest('.works__item');
+    if (workItem && !isOverCase) {
+      isOverCase = true;
+      followerX = mouseX;
+      followerY = mouseY;
+      if (dot) dot.classList.add('is-hidden');
+      if (follower) follower.classList.add('is-active');
+    } else if (!workItem && isOverCase) {
+      isOverCase = false;
+      if (dot) dot.classList.remove('is-hidden');
+      if (follower) follower.classList.remove('is-active');
+    }
+  };
+
+  // Event bindings
+  window.addEventListener('mousemove', onMouseMove, { passive: true });
+  document.addEventListener('mouseleave', onMouseLeave);
   window.addEventListener('scroll', onScrollCheck, { passive: true });
 
   const lenis = getLenis();
@@ -122,28 +129,14 @@ export function initCursorFollower(): void {
     lenis.on('scroll', onScrollCheck);
   }
 
-  // Interactive hover scaling on links, buttons, cards, focus tiles
-  const interactiveElements = document.querySelectorAll(
-    'a, button, .process-card, .focus-tile, .focus-tile-btn'
-  );
-  interactiveElements.forEach((el) => {
-    el.addEventListener('mouseenter', () => {
-      if (dot && !isOverCase) dot.classList.add('is-hovering');
-    });
-    el.addEventListener('mouseleave', () => {
-      if (dot) dot.classList.remove('is-hovering');
-    });
-  });
+  // Start rendering loop
+  rafId = requestAnimationFrame(loop);
 
-  // Project cards transition (hides dot, activates EXPLORE CASE circle)
-  const workItems = document.querySelectorAll('.works__item');
-  workItems.forEach((item) => {
-    item.addEventListener('mouseenter', () => {
-      activateFollower();
-    });
-
-    item.addEventListener('mouseleave', () => {
-      deactivateFollower();
-    });
-  });
+  // Return unbind handler for transitions / unmount
+  return () => {
+    if (rafId !== null) cancelAnimationFrame(rafId);
+    window.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseleave', onMouseLeave);
+    window.removeEventListener('scroll', onScrollCheck);
+  };
 }

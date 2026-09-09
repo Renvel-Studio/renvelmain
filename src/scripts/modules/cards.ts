@@ -3,85 +3,178 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function initStickyCardStack(): void {
+export function initStickyCardStack(
+  prefersReducedMotion: boolean = false
+): void {
   const cards = document.querySelectorAll<HTMLElement>('.process-card');
   if (!cards.length) return;
 
-  const baseRotations = [-1.8, 1.8, -0.8];
-  let isTicking = false;
+  const baseRotations = [-4, 4, -2.5];
+  const isMobile = () => window.innerWidth <= 768;
 
-  function updateStack() {
-    const windowHeight = window.innerHeight;
-
-    cards.forEach((card, i) => {
-      const nextCard = cards[i + 1];
-
-      if (nextCard) {
-        const nextRect = nextCard.getBoundingClientRect();
-        const stickyTop = parseInt(window.getComputedStyle(card).top, 10) || 96;
-        const distance = nextRect.top - stickyTop;
-        const totalDistance = windowHeight * 0.55;
-
-        // Progress goes from 0 (card far away) to 1 (card fully stacked over)
-        const progress = 1 - Math.min(Math.max(distance / totalDistance, 0), 1);
-
-        const currentScale = 1 - progress * 0.055;
-        const brightness = 1 - progress * 0.12;
-        const baseRot = baseRotations[i] || 0;
-
-        card.style.transform = `scale(${currentScale}) rotate(${baseRot}deg)`;
-        card.style.filter = `brightness(${brightness})`;
-      } else {
-        const baseRot = baseRotations[i] || 0;
-        card.style.transform = `rotate(${baseRot}deg)`;
-        card.style.filter = 'brightness(1)';
-      }
+  // Mobile or reduced motion: keep all cards static and unstacked
+  if (prefersReducedMotion || isMobile()) {
+    cards.forEach(card => {
+      gsap.set(card, { clearProps: 'transform,filter' });
+      const textLayer = card.querySelector<HTMLElement>(
+        '.process-card__text-layer'
+      );
+      if (textLayer) gsap.set(textLayer, { clearProps: 'opacity,y' });
+      const media = card.querySelector<HTMLElement>('.process-card__media');
+      if (media)
+        gsap.set(media, { clearProps: 'top,left,width,height,borderRadius' });
+      card.style.marginBlockEnd = '';
     });
-
-    isTicking = false;
+    return;
   }
 
-  window.addEventListener(
-    'scroll',
-    () => {
-      if (!isTicking) {
-        window.requestAnimationFrame(updateStack);
-        isTicking = true;
+  // Runway for Card 3: comfortable reading dwell time
+  const lastCard = cards[cards.length - 1];
+  if (lastCard) {
+    lastCard.style.marginBlockEnd = '35vh';
+  }
+
+  const getStickyTop = (el: HTMLElement): number => {
+    const val = parseFloat(window.getComputedStyle(el).top);
+    return isNaN(val) ? 84 : val;
+  };
+
+  // Base physical rotation for natural editorial stacking
+  cards.forEach((card, i) => {
+    gsap.set(card, {
+      rotate: baseRotations[i] || 0,
+      transformPerspective: 1000
+    });
+  });
+
+  const getSlotRect = (
+    card: HTMLElement,
+    slot: HTMLElement,
+    textLayer: HTMLElement
+  ) => {
+    const currentY = (gsap.getProperty(textLayer, 'y') as number) || 0;
+    const cardRect = card.getBoundingClientRect();
+    const slotRect = slot.getBoundingClientRect();
+
+    return {
+      top: slotRect.top - cardRect.top - currentY,
+      left: slotRect.left - cardRect.left,
+      width: slot.offsetWidth,
+      height: slot.offsetHeight
+    };
+  };
+
+  // --- All Cards: Permanently docked in their end-state (No image expand/shrink animation) ---
+  const dockAllCardsInPlace = () => {
+    cards.forEach(card => {
+      const media = card.querySelector<HTMLElement>('.process-card__media');
+      const slot = card.querySelector<HTMLElement>('.process-card__media-slot');
+      const textLayer = card.querySelector<HTMLElement>(
+        '.process-card__text-layer'
+      );
+      if (!media || !slot || !textLayer) return;
+
+      // Text layer is permanently 100% visible and settled
+      gsap.set(textLayer, { opacity: 1, y: 0 });
+
+      // Image is neatly locked into its designated slot area from the start
+      const rect = getSlotRect(card, slot, textLayer);
+      gsap.set(media, {
+        top: rect.top,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height,
+        borderRadius: 20
+      });
+
+      const img = media.querySelector<HTMLElement>('img');
+      if (img) {
+        img.style.objectFit = 'cover';
+        img.style.objectPosition = 'center 20%';
       }
-    },
-    { passive: true }
-  );
+    });
+  };
 
-  window.addEventListener('resize', updateStack);
-  updateStack();
+  dockAllCardsInPlace();
+  ScrollTrigger.addEventListener('refresh', dockAllCardsInPlace);
 
-  // Interactive 3D tilt on card hover
+  // --- Stack-Cover Dimming (Cards dim and scale gently as subsequent cards stack over them) ---
+  cards.forEach((card, i) => {
+    const nextCard = cards[i + 1];
+    if (!nextCard) return;
+
+    ScrollTrigger.create({
+      trigger: nextCard,
+      start: 'top bottom',
+      end: () => `top ${getStickyTop(nextCard)}px`,
+      scrub: 0.3,
+      invalidateOnRefresh: true,
+      onUpdate: self => {
+        gsap.set(card, {
+          scale: 1 - self.progress * 0.045,
+          filter: `brightness(${1 - self.progress * 0.12})`
+        });
+      }
+    });
+  });
+
+  // --- Interactive 3D micro-tilt on desktop hover ---
   if (!('ontouchstart' in window)) {
-    cards.forEach((card, index) => {
-      const baseRot = baseRotations[index] || 0;
+    cards.forEach(card => {
+      const tiltX = gsap.quickTo(card, 'rotateX', {
+        duration: 0.4,
+        ease: 'power2.out'
+      });
+      const tiltY = gsap.quickTo(card, 'rotateY', {
+        duration: 0.4,
+        ease: 'power2.out'
+      });
+      const lift = gsap.quickTo(card, 'y', {
+        duration: 0.4,
+        ease: 'power2.out'
+      });
 
-      card.addEventListener('mousemove', (e) => {
+      card.addEventListener('mousemove', e => {
         const rect = card.getBoundingClientRect();
         const x = (e.clientX - rect.left) / rect.width - 0.5;
         const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-        card.style.transform = `rotate(${baseRot}deg) perspective(1000px) rotateX(${-y * 4}deg) rotateY(${x * 4}deg) translateY(-3px)`;
-        card.style.boxShadow = `0 -8px 30px rgba(0, 0, 0, 0.4), 0 40px 85px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 0, 0, 0.15)`;
+        tiltX(-y * 3.5);
+        tiltY(x * 3.5);
+        lift(-3);
+        card.style.boxShadow =
+          '0 -8px 30px rgba(0, 0, 0, 0.4), 0 40px 85px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 0, 0, 0.15)';
       });
 
       card.addEventListener('mouseleave', () => {
-        updateStack();
+        tiltX(0);
+        tiltY(0);
+        lift(0);
         card.style.boxShadow = '';
       });
     });
   }
+
+  window.addEventListener('resize', () => {
+    if (lastCard) {
+      lastCard.style.marginBlockEnd =
+        prefersReducedMotion || isMobile() ? '' : '35vh';
+    }
+    dockAllCardsInPlace();
+    ScrollTrigger.refresh();
+  });
 }
 
 export function initPremiumParallax(prefersReducedMotion: boolean): void {
-  const statementLine = document.querySelector<SVGPathElement>('.statement-line-path');
-  const statementBanner = document.querySelector<HTMLElement>('.gradient-banner');
+  const statementLine = document.querySelector<SVGPathElement>(
+    '.statement-line-path'
+  );
+  const statementBanner =
+    document.querySelector<HTMLElement>('.gradient-banner');
   if (statementLine) {
-    const pathLength = statementLine.getTotalLength ? statementLine.getTotalLength() : 1000;
+    const pathLength = statementLine.getTotalLength
+      ? statementLine.getTotalLength()
+      : 1000;
     statementLine.style.strokeDasharray = `${pathLength}`;
     if (prefersReducedMotion) {
       statementLine.style.strokeDashoffset = '0';
@@ -115,10 +208,11 @@ export function initPremiumParallax(prefersReducedMotion: boolean): void {
       }
     });
 
-    // Intro Section Subtle Image Parallax
     const introImages = document.querySelectorAll<HTMLElement>('.intro__image');
-    introImages.forEach((img) => {
-      const parentCard = img.closest<HTMLElement>('.intro__media-card') || img.closest<HTMLElement>('.intro__panoramic-card');
+    introImages.forEach(img => {
+      const parentCard =
+        img.closest<HTMLElement>('.intro__media-card') ||
+        img.closest<HTMLElement>('.intro__panoramic-card');
       if (parentCard) {
         gsap.fromTo(
           img,
@@ -138,11 +232,12 @@ export function initPremiumParallax(prefersReducedMotion: boolean): void {
       }
     });
 
-    // 3D Magnetic Tilt Micro-Interaction on Intro Media Cards
     if (!('ontouchstart' in window)) {
-      const introTiltCards = document.querySelectorAll<HTMLElement>('.intro__media-card--tilt');
-      introTiltCards.forEach((card) => {
-        card.addEventListener('mousemove', (e) => {
+      const introTiltCards = document.querySelectorAll<HTMLElement>(
+        '.intro__media-card--tilt'
+      );
+      introTiltCards.forEach(card => {
+        card.addEventListener('mousemove', e => {
           const rect = card.getBoundingClientRect();
           const x = (e.clientX - rect.left) / rect.width - 0.5;
           const y = (e.clientY - rect.top) / rect.height - 0.5;
@@ -166,8 +261,10 @@ export function initPremiumParallax(prefersReducedMotion: boolean): void {
         });
       });
     }
-    // Intro Section Smooth Scroll-Triggered Text Animation
-    const headlineLines = document.querySelectorAll<HTMLElement>('.intro__headline-line');
+
+    const headlineLines = document.querySelectorAll<HTMLElement>(
+      '.intro__headline-line'
+    );
     if (headlineLines.length) {
       gsap.fromTo(
         headlineLines,
@@ -188,8 +285,9 @@ export function initPremiumParallax(prefersReducedMotion: boolean): void {
       );
     }
 
-    const textCards = document.querySelectorAll<HTMLElement>('[data-intro-text]');
-    textCards.forEach((card) => {
+    const textCards =
+      document.querySelectorAll<HTMLElement>('[data-intro-text]');
+    textCards.forEach(card => {
       const items = card.querySelectorAll<HTMLElement>('.intro__anim-item');
       if (items.length) {
         gsap.fromTo(

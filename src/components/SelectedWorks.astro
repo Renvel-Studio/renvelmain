@@ -76,7 +76,7 @@ const projects: Project[] = [
   <div class="works__header reveal">
     <div>
       <span class="works__label">Selected Work</span>
-      <h2 class="t-heading-1" style="margin-top: 1rem;">
+      <h2 class="t-heading-1 works__heading">
         Growth systems<br />that <span class="text-gradient-alt">scaled revenue.</span>
       </h2>
     </div>
@@ -85,14 +85,9 @@ const projects: Project[] = [
 
   <div class="works__grid">
     {projects.map((project) => (
-      <a
-        class="works__item reveal"
-        id={project.id}
-        href={project.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`View ${project.name} case study on TikTok`}
-      >
+      <a class="works__item reveal" id={project.id} href={project.url} target="_blank" rel="noopener noreferrer" aria-label={`View ${project.name} case study on TikTok`} itemscope itemtype="https://schema.org/CreativeWork">
+        <meta itemprop="name" content={project.name} />
+        <meta itemprop="url" content={project.url} />
         <div class="works__item-media">
           <video
             class="works__item-video"
@@ -110,7 +105,7 @@ const projects: Project[] = [
 
         <div class="works__item-meta">
           <div class="works__glass-badge">
-            <span class="luminous-dot"></span>
+            <span class="works__glass-badge-dot"></span>
             <span class="works__glass-badge-text">Case Study</span>
             <span class="works__glass-arrow">↗</span>
           </div>
@@ -134,4 +129,3 @@ const projects: Project[] = [
     ))}
   </div>
 </section>
-

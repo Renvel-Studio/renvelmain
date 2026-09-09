@@ -14,8 +14,15 @@ h6,
 .t-heading-1 {
   font-family: var(--font-display);
   font-optical-sizing: auto;
-  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
-  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "dlig" 0;
+  font-variation-settings:
+    'opsz' 144,
+    'SOFT' 0,
+    'WONK' 0;
+  font-feature-settings:
+    'kern' 1,
+    'liga' 1,
+    'calt' 1,
+    'dlig' 0;
   color: var(--ink);
   text-wrap: balance;
 }
@@ -77,8 +84,14 @@ button,
 .hero__statement h1 {
   font-family: var(--font-display);
   font-optical-sizing: auto;
-  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
-  font-feature-settings: "kern" 1, "liga" 1, "dlig" 0;
+  font-variation-settings:
+    'opsz' 144,
+    'SOFT' 0,
+    'WONK' 0;
+  font-feature-settings:
+    'kern' 1,
+    'liga' 1,
+    'dlig' 0;
   font-size: var(--fs-hero);
   font-weight: 700;
   letter-spacing: -0.035em;
@@ -93,7 +106,10 @@ button,
   font-style: italic;
   font-weight: 700;
   font-optical-sizing: auto;
-  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+  font-variation-settings:
+    'opsz' 144,
+    'SOFT' 0,
+    'WONK' 0;
   color: var(--ink);
 }
 
@@ -139,9 +155,9 @@ button,
 .text-gradient-alt {
   background: linear-gradient(
     135deg,
-    var(--blue-lt) 0%,
-    var(--amber) 50%,
-    var(--blue-lt) 100%
+    var(--amber-warm) 0%,
+    var(--amber-bright) 50%,
+    var(--amber-warm) 100%
   );
   background-size: 250% 250%;
   -webkit-background-clip: text;
@@ -153,11 +169,12 @@ button,
 .text-gradient-cyan {
   background: linear-gradient(
     135deg,
-    var(--blue) 0%,
-    var(--blue-lt) 50%,
-    var(--blue) 100%
+    var(--amber) 0%,
+    var(--amber-bright) 50%,
+    var(--amber) 100%
   );
   background-size: 300% 300%;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: animate-gradient 6s ease infinite;

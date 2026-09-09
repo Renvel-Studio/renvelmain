@@ -1,224 +1,330 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { getLenis } from './lenis';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function initFocusHorizontalScroll(prefersReducedMotion: boolean = false): void {
-  const section = document.getElementById('focus') as HTMLElement | null;
-  const strip = document.getElementById('focus-horizontal-strip') as HTMLElement | null;
-  const ambientGlow = document.getElementById('focus-ambient-glow') as HTMLElement | null;
-  const lineOur = document.getElementById('focus-line-our') as HTMLElement | null;
-  const lineFocus = document.getElementById('focus-line-focus') as HTMLElement | null;
-  const counter = document.getElementById('focus-counter') as HTMLElement | null;
-  const counterCurrent = document.getElementById('focus-counter-current') as HTMLElement | null;
-  const tiles = Array.from(document.querySelectorAll<HTMLElement>('.focus-tile'));
+interface ScrollTriggerWithSpacer extends ScrollTrigger {
+  spacer?: HTMLElement;
+}
 
-  if (!section || !strip) return;
+export function initFocusHorizontalScroll(
+  prefersReducedMotion: boolean = false
+): () => void {
+  const section = document.getElementById('focus');
+  const strip = document.getElementById('focus-horizontal-strip');
+  if (!section || !strip) return () => {};
 
-  const isMobile = () => window.innerWidth <= 900;
+  const lineOur = document.getElementById('focus-line-our');
+  const lineFocus = document.getElementById('focus-line-focus');
+  const counter = document.getElementById('focus-counter');
+  const counterCurrent = document.getElementById('focus-counter-current');
+  const ambientGlow = document.getElementById('focus-ambient-glow');
+  const tiles = Array.from(strip.querySelectorAll<HTMLElement>('.focus-tile'));
 
-  // On mobile or reduced motion, ensure everything is statically sharp & visible
-  if (prefersReducedMotion || isMobile()) {
-    if (lineOur) {
-      lineOur.style.opacity = '1';
-      lineOur.style.filter = 'none';
-      lineOur.style.transform = 'none';
-    }
-    if (lineFocus) {
-      lineFocus.style.opacity = '1';
-      lineFocus.style.filter = 'none';
-      lineFocus.style.transform = 'none';
-    }
-    if (ambientGlow) {
-      ambientGlow.style.opacity = '0.3';
-    }
-    tiles.forEach((t) => {
-      t.classList.add('is-active');
-      t.style.opacity = '1';
-      t.style.filter = 'none';
-      t.style.transform = 'none';
-    });
-    return;
-  }
-
-  // Calculate the exact horizontal scroll distance so Tile 3 stops perfectly framed
-  const getScrollDistance = () => {
-    const lastTile = strip.querySelector<HTMLElement>('.focus-tile:last-child');
-    const containerPadding =
-      parseFloat(
-        getComputedStyle(document.documentElement).getPropertyValue('--container-padding')
-      ) || 48;
-    const windowWidth = window.innerWidth;
-
-    if (lastTile) {
-      // Align lastTile right edge with windowWidth - containerPadding
-      const lastTileRight = lastTile.offsetLeft + lastTile.offsetWidth;
-      return Math.max(lastTileRight - (windowWidth - containerPadding), 0);
-    }
-
-    return Math.max(strip.scrollWidth - windowWidth, 0);
-  };
-
-  // Highlighting synchronization: Update counter number and tile active illumination
-  let currentActiveIndex = -1;
-
-  const setActiveDiscipline = (index: number) => {
-    if (index === currentActiveIndex) return;
-    currentActiveIndex = index;
-
-    // 1. Update numeric counter (01, 02, 03)
-    if (counterCurrent) {
-      counterCurrent.textContent = `0${index + 1}`;
-    }
-
-    // 2. Highlight corresponding tile card
-    tiles.forEach((tile, idx) => {
-      if (idx === index) {
-        tile.classList.add('is-active');
-      } else {
-        tile.classList.remove('is-active');
-      }
-    });
-  };
-
-  // Set initial active state on Discipline 01
-  setActiveDiscipline(0);
-
-  // Generous unhurried intro distance for the slow, cinematic "our focus" reveal
-  const getIntroDistance = () => window.innerHeight * 0.85;
-
-  // Master GSAP Timeline with 2 Dedicated Phases:
-  // Phase 1 (0 to 35%): "our focus" appears slowly with deep radial glow, staggered optical unblur,
-  //                     letter-spacing contraction, and vertical settling. Tile 1 grounds into place.
-  // Phase 2 (35% to 100%): Seamless horizontal glide through Tile 1, Tile 2, Tile 3 with synchronized counter.
-  const introPct = 0.35;
-  const glidePct = 0.65;
-
-  const masterTl = gsap.timeline({
-    scrollTrigger: {
-      trigger: section,
-      pin: true,
-      anticipatePin: 1,
-      scrub: 0.8,
-      start: 'top top',
-      end: () => `+=${getIntroDistance() + getScrollDistance()}`,
-      invalidateOnRefresh: true,
-      onUpdate: (self) => {
-        const p = self.progress;
-        if (p < introPct) {
-          // During slow title reveal, Tile 1 is active
-          setActiveDiscipline(0);
-        } else {
-          // During horizontal glide, calculate which tile is currently framed
-          const glideProgress = (p - introPct) / glidePct;
-          if (glideProgress < 0.35) {
-            setActiveDiscipline(0);
-          } else if (glideProgress < 0.70) {
-            setActiveDiscipline(1);
-          } else {
-            setActiveDiscipline(2);
-          }
-        }
-      }
-    }
-  });
-
-  // --- Phase 1: Slow, Cinematic Appearance of "our focus" ---
-  // 1. Ethereal ambient light bloom expands behind the title
   if (ambientGlow) {
-    masterTl.fromTo(
-      ambientGlow,
-      { opacity: 0, scale: 0.6 },
-      { opacity: 0.85, scale: 1.15, duration: 24, ease: 'power2.out' },
-      0
-    );
+    ambientGlow.style.display = 'none';
   }
 
-  // 2. Line 1: "our" slowly resolves from deep optical blur, rises, and tightens letter-spacing
-  if (lineOur) {
-    masterTl.fromTo(
-      lineOur,
-      {
-        opacity: 0,
-        y: 48,
-        scale: 0.9,
-        filter: 'blur(26px)',
-        letterSpacing: '0.06em'
-      },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        filter: 'blur(0px)',
-        letterSpacing: '-0.04em',
-        duration: 22,
-        ease: 'power2.out'
-      },
-      0
-    );
-  }
-
-  // 3. Line 2: "focus" follows with a graceful staggered wave
-  if (lineFocus) {
-    masterTl.fromTo(
-      lineFocus,
-      {
-        opacity: 0,
-        y: 48,
-        scale: 0.9,
-        filter: 'blur(26px)',
-        letterSpacing: '0.06em'
-      },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        filter: 'blur(0px)',
-        letterSpacing: '-0.04em',
-        duration: 24,
-        ease: 'power2.out'
-      },
-      7
-    );
-  }
-
-  // 4. Counter gently fades into view
   if (counter) {
-    masterTl.fromTo(
-      counter,
-      { opacity: 0, y: -12 },
-      { opacity: 1, y: 0, duration: 16, ease: 'power2.out' },
-      8
-    );
+    counter.setAttribute('aria-live', 'polite');
+    counter.setAttribute('aria-atomic', 'true');
   }
 
-  // 5. First tile grounds softly into place (held strictly at x = 0)
-  const firstTile = tiles[0];
-  if (firstTile) {
-    masterTl.fromTo(
-      firstTile,
-      { opacity: 0.4, y: 35, scale: 0.96 },
-      { opacity: 1, y: 0, scale: 1, duration: 25, ease: 'power2.out' },
-      4
-    );
-  }
+  const mm = gsap.matchMedia();
 
-  // Hold pause so the majestic title and Tile 1 are appreciated before horizontal movement starts
-  masterTl.to({}, { duration: 6 }, 25);
-
-  // --- Phase 2: Horizontal Glide ---
-  // Once the title is fully resolved, cards glide across the screen
-  masterTl.to(
-    strip,
+  // Mobile / Reduced Motion Profile
+  mm.add(
     {
-      x: () => -getScrollDistance(),
-      duration: 65,
-      ease: 'none'
+      isReduced: '(prefers-reduced-motion: reduce)',
+      isMobile: '(max-width: 900px)'
     },
-    35
+    context => {
+      const { isReduced, isMobile } = context.conditions as {
+        isReduced: boolean;
+        isMobile: boolean;
+      };
+
+      if (prefersReducedMotion || isReduced || isMobile) {
+        if (lineOur) gsap.set(lineOur, { clearProps: 'all', opacity: 1 });
+        if (lineFocus) gsap.set(lineFocus, { clearProps: 'all', opacity: 1 });
+        if (counter) gsap.set(counter, { clearProps: 'all', opacity: 1 });
+        if (strip) gsap.set(strip, { clearProps: 'all' });
+
+        tiles.forEach(tile => {
+          gsap.set(tile, { clearProps: 'all', opacity: 1 });
+          tile.classList.add('is-active');
+          tile.removeAttribute('aria-current');
+        });
+      }
+    }
   );
 
-  window.addEventListener('resize', () => {
-    ScrollTrigger.refresh();
+  // Desktop Motion Profile
+  mm.add('(min-width: 901px)', () => {
+    if (prefersReducedMotion) return;
+
+    gsap.set(strip, {
+      transformPerspective: 1400,
+      transformStyle: 'preserve-3d'
+    });
+
+    // Exact horizontal distance needed to bring the 3rd tile into prime view
+    const getScrollDistance = (): number => {
+      const firstTile = tiles[0];
+      const lastTile = tiles[tiles.length - 1];
+      if (!firstTile || !lastTile) return 0;
+      return Math.max(lastTile.offsetLeft - firstTile.offsetLeft, 0);
+    };
+
+    let currentActiveIndex = -1;
+
+    const setActiveDiscipline = (index: number) => {
+      if (index === currentActiveIndex) return;
+      currentActiveIndex = index;
+
+      if (counterCurrent) {
+        counterCurrent.textContent = `0${index + 1}`;
+      }
+
+      tiles.forEach((tile, idx) => {
+        const isActive = idx === index;
+        tile.classList.toggle('is-active', isActive);
+        if (isActive) {
+          tile.setAttribute('aria-current', 'step');
+        } else {
+          tile.removeAttribute('aria-current');
+        }
+      });
+    };
+
+    setActiveDiscipline(0);
+
+    // Dynamic 3D rotation & perspective in place
+    const updateSpatialRotation = () => {
+      const currentStripX = (gsap.getProperty(strip, 'x') as number) || 0;
+      const focalPoint = window.innerWidth * 0.44;
+
+      let minDistance = Infinity;
+      let closestIdx = 0;
+
+      tiles.forEach((tile, idx) => {
+        const tileCenter =
+          tile.offsetLeft + currentStripX + tile.offsetWidth * 0.5;
+        const distFromFocal = tileCenter - focalPoint;
+        const absDist = Math.abs(distFromFocal);
+
+        if (absDist < minDistance) {
+          minDistance = absDist;
+          closestIdx = idx;
+        }
+
+        const normalizedOffset = gsap.utils.clamp(
+          -1.2,
+          1.2,
+          distFromFocal / (window.innerWidth * 0.5)
+        );
+
+        const rotate2D = normalizedOffset * 2.2;
+        const rotateY = normalizedOffset * 6.5;
+        const zDepth = -Math.abs(normalizedOffset) * 30;
+        const scale = 1 - Math.min(Math.abs(normalizedOffset) * 0.035, 0.05);
+        const opacity = 1 - Math.min(Math.abs(normalizedOffset) * 0.18, 0.25);
+
+        gsap.set(tile, {
+          rotate: rotate2D,
+          rotateY: rotateY,
+          z: zDepth,
+          scale: scale,
+          opacity: opacity,
+          transformPerspective: 1200,
+          transformOrigin: 'center center',
+          overwrite: 'auto'
+        });
+      });
+
+      setActiveDiscipline(closestIdx);
+    };
+
+    // --- Master Timeline with 100vw Pin Spacer Correction ---
+    const masterTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        pin: true,
+        pinSpacing: true,
+        pinType: 'fixed',
+        scrub: 1,
+        anticipatePin: 1,
+        start: 'top top',
+        end: () => `+=${getScrollDistance() + window.innerHeight * 0.75}`,
+        invalidateOnRefresh: true,
+        fastScrollEnd: true,
+        preventOverlaps: true,
+        onRefresh: self => {
+          // Type-safe access to internal spacer and HTML pin element
+          const typedSelf = self as ScrollTriggerWithSpacer;
+          const spacer = typedSelf.spacer;
+          const pin = self.pin as HTMLElement | null;
+
+          if (spacer) {
+            spacer.style.width = '100vw';
+            spacer.style.maxWidth = '100vw';
+            spacer.style.minWidth = '100vw';
+            spacer.style.marginLeft = 'calc(50% - 50vw)';
+            spacer.style.marginRight = 'calc(50% - 50vw)';
+            spacer.style.paddingLeft = '0px';
+            spacer.style.paddingRight = '0px';
+            spacer.style.boxSizing = 'border-box';
+          }
+          if (pin) {
+            pin.style.width = '100vw';
+            pin.style.maxWidth = '100vw';
+            pin.style.minWidth = '100vw';
+            pin.style.boxSizing = 'border-box';
+          }
+        },
+        onUpdate: () => {
+          updateSpatialRotation();
+        }
+      }
+    });
+
+    // Entrance cushion: Title settles calmly (0.00 -> 0.08)
+    if (lineOur && lineFocus) {
+      masterTl.fromTo(
+        [lineOur, lineFocus],
+        { opacity: 0.85, y: 12 },
+        { opacity: 1, y: 0, duration: 0.08, ease: 'power1.out' },
+        0
+      );
+    }
+    if (counter) {
+      masterTl.fromTo(
+        counter,
+        { opacity: 0.85 },
+        { opacity: 1, duration: 0.08, ease: 'power1.out' },
+        0
+      );
+    }
+
+    // Active Traverse: Strip slides smoothly (0.08 -> 0.88)
+    masterTl.to(
+      strip,
+      {
+        x: () => -getScrollDistance(),
+        duration: 0.8,
+        ease: 'none'
+      },
+      0.08
+    );
+
+    // Exit Settle Cushion: Card 3 dwells comfortably before unpinning (0.88 -> 1.00)
+    masterTl.to({}, { duration: 0.12 }, 0.88);
+
+    const st = masterTl.scrollTrigger!;
+
+    // Accessibility Tab Support (WCAG 2.4.11)
+    const handleFocusIn = (e: FocusEvent) => {
+      const focusedTarget = e.target as HTMLElement | null;
+      if (!focusedTarget) return;
+
+      const targetTile = focusedTarget.closest<HTMLElement>('.focus-tile');
+      if (!targetTile) return;
+
+      const targetIndex = tiles.indexOf(targetTile);
+      if (targetIndex === -1) return;
+
+      if (targetIndex === currentActiveIndex) {
+        const rect = targetTile.getBoundingClientRect();
+        if (rect.left >= 0 && rect.right <= window.innerWidth) return;
+      }
+
+      const totalScroll = st.end - st.start;
+      const firstTile = tiles[0];
+      const maxDist = getScrollDistance();
+      const targetOffset =
+        targetTile.offsetLeft - (firstTile ? firstTile.offsetLeft : 0);
+      const glideProgress =
+        maxDist > 0 ? gsap.utils.clamp(0, 1, targetOffset / maxDist) : 0;
+
+      const tlFraction = 0.08 + glideProgress * 0.8;
+      const targetScrollY = st.start + tlFraction * totalScroll;
+
+      setActiveDiscipline(targetIndex);
+
+      const lenis = getLenis();
+      if (lenis) {
+        lenis.scrollTo(targetScrollY, {
+          duration: 0.9,
+          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        });
+      } else {
+        window.scrollTo({
+          top: targetScrollY,
+          behavior: 'smooth'
+        });
+      }
+    };
+
+    strip.addEventListener('focusin', handleFocusIn);
+
+    // Desktop 3D Hover Tilt
+    const cleanupHoverListeners: Array<() => void> = [];
+
+    if (
+      !('ontouchstart' in window) &&
+      !window.matchMedia('(pointer: coarse)').matches
+    ) {
+      tiles.forEach(tile => {
+        const cardInner = (tile.querySelector('.focus-tile__inner') ||
+          tile) as HTMLElement;
+
+        const tiltX = gsap.quickTo(cardInner, 'rotateX', {
+          duration: 0.4,
+          ease: 'power2.out'
+        });
+        const tiltY = gsap.quickTo(cardInner, 'rotateY', {
+          duration: 0.4,
+          ease: 'power2.out'
+        });
+        const liftY = gsap.quickTo(cardInner, 'y', {
+          duration: 0.4,
+          ease: 'power2.out'
+        });
+
+        const onMouseMove = (e: MouseEvent) => {
+          const rect = cardInner.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+          tiltX(-y * 3.5);
+          tiltY(x * 3.5);
+          liftY(-3);
+        };
+
+        const onMouseLeave = () => {
+          tiltX(0);
+          tiltY(0);
+          liftY(0);
+        };
+
+        tile.addEventListener('mousemove', onMouseMove);
+        tile.addEventListener('mouseleave', onMouseLeave);
+
+        cleanupHoverListeners.push(() => {
+          tile.removeEventListener('mousemove', onMouseMove);
+          tile.removeEventListener('mouseleave', onMouseLeave);
+        });
+      });
+    }
+
+    return () => {
+      strip.removeEventListener('focusin', handleFocusIn);
+      cleanupHoverListeners.forEach(cleanup => cleanup());
+    };
   });
+
+  return () => {
+    mm.revert();
+  };
 }

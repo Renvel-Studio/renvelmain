@@ -2,16 +2,10 @@
 // src/components/BackgroundCanvas.astro
 ---
 
-<!-- Living Dynamic Canvas: Organic Moving Yellow Fluid Objects & Ambient Light Engine -->
+<!-- Living Dynamic Canvas: One Soft Radiant Yellow Blob & Ambient Light Engine -->
 <div class="ambient-canvas" aria-hidden="true">
-  <!-- Primary Moving Radiant Yellow Fluid Orb -->
+  <!-- Primary Moving Radiant Yellow Fluid Orb — sits behind the hero headline -->
   <div class="ambient-orb ambient-orb--yellow-hero"></div>
-
-  <!-- Secondary Warm Golden Fluid Mesh -->
-  <div class="ambient-orb ambient-orb--amber-drift"></div>
-
-  <!-- Deep Azure Contrast Accent Pool -->
-  <div class="ambient-orb ambient-orb--azure-accent"></div>
 
   <!-- Interactive Golden Cursor Luminescence (Follows Pointer Smoothly) -->
   <div class="ambient-orb ambient-orb--interactive" id="ambient-interactive-orb"></div>
@@ -41,7 +35,9 @@
     pointer-events: none;
   }
 
-  /* 1. Primary Moving Radiant Yellow Orb — Center/Hero Focus */
+  /* 1. Primary Moving Radiant Yellow Orb — Center/Hero Focus.
+     Single soft blob, kept subtle at the core so text sitting on top
+     of it stays crisp; the glow reads at the edges instead. */
   .ambient-orb--yellow-hero {
     top: -10vh;
     left: 20vw;
@@ -51,52 +47,16 @@
     max-height: 950px;
     background: radial-gradient(
       circle at 45% 45%,
-      rgba(255, 200, 0, 0.45) 0%,
-      rgba(255, 180, 0, 0.28) 35%,
-      rgba(255, 140, 0, 0.12) 60%,
+      rgba(255, 200, 0, 0.32) 0%,
+      rgba(255, 180, 0, 0.20) 35%,
+      rgba(255, 140, 0, 0.09) 60%,
       transparent 75%
     );
     opacity: 0.85;
     animation: floatMorphYellow 22s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
   }
 
-  /* 2. Secondary Warm Amber Drift Orb — Flows across Mid-Page */
-  .ambient-orb--amber-drift {
-    top: 40vh;
-    right: -10vw;
-    width: 55vw;
-    height: 55vw;
-    max-width: 800px;
-    max-height: 800px;
-    background: radial-gradient(
-      circle at 50% 50%,
-      rgba(255, 190, 0, 0.35) 0%,
-      rgba(255, 150, 0, 0.20) 40%,
-      transparent 70%
-    );
-    opacity: 0.75;
-    animation: floatMorphAmber 28s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
-  }
-
-  /* 3. Deep Azure Chromatic Counter-Accent */
-  .ambient-orb--azure-accent {
-    bottom: -15vh;
-    left: -8vw;
-    width: 50vw;
-    height: 50vw;
-    max-width: 700px;
-    max-height: 700px;
-    background: radial-gradient(
-      circle at 50% 50%,
-      rgba(0, 85, 255, 0.25) 0%,
-      rgba(74, 139, 255, 0.12) 45%,
-      transparent 70%
-    );
-    opacity: 0.65;
-    animation: floatMorphAzure 25s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
-  }
-
-  /* 4. Interactive Golden Cursor Glow */
+  /* 2. Interactive Golden Cursor Glow */
   .ambient-orb--interactive {
     top: 0;
     left: 0;
@@ -133,33 +93,6 @@
     100% {
       transform: translate3d(8vw, 4vh, 0) scale(1.05) rotate(135deg);
       border-radius: 60% 40% 50% 50% / 50% 50% 60% 40%;
-    }
-  }
-
-  @keyframes floatMorphAmber {
-    0% {
-      transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
-      border-radius: 40% 60% 50% 50% / 50% 40% 60% 50%;
-    }
-    50% {
-      transform: translate3d(-10vw, -12vh, 0) scale(1.12) rotate(-60deg);
-      border-radius: 60% 40% 40% 60% / 60% 50% 50% 40%;
-    }
-    100% {
-      transform: translate3d(-4vw, 8vh, 0) scale(0.95) rotate(-120deg);
-      border-radius: 45% 55% 60% 40% / 50% 60% 40% 50%;
-    }
-  }
-
-  @keyframes floatMorphAzure {
-    0% {
-      transform: translate3d(0, 0, 0) scale(1);
-    }
-    50% {
-      transform: translate3d(8vw, -6vh, 0) scale(1.1);
-    }
-    100% {
-      transform: translate3d(4vw, 5vh, 0) scale(0.95);
     }
   }
 

@@ -51,7 +51,7 @@ const stats: Stat[] = [
 
 <!-- Section: Proven Impact Metrics (Immediately below Hero) -->
 <section class="stats-section section-border" id="metrics" aria-label="Proven agency impact metrics">
-  <div class="manifesto__stats">
+  <div class="stats-section__grid">
     {stats.map((stat) => (
       <div class={`stat reveal ${stat.delayClass || ''}`} id={stat.id}>
         <span
@@ -69,4 +69,3 @@ const stats: Stat[] = [
     ))}
   </div>
 </section>
-

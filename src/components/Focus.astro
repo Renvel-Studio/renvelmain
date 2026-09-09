@@ -3,10 +3,12 @@
 ---
 
 <!-- Section 7: Our Focus (Premium GSAP Pinned Horizontal Showcase) -->
-<section class="focus-pinned-section section-border" id="focus" aria-label="Our Focus">
+<section class="focus-pinned-section" id="focus" aria-label="Our Focus">
+  <h2 class="sr-only">Our Focus</h2>
+
   <div class="focus-sticky-viewport" id="focus-sticky-viewport">
 
-    <!-- Atmospheric Ambient Glow Behind Title -->
+    <!-- Atmospheric Ambient Glow Behind Title (Disabled cleanly via CSS) -->
     <div class="focus-ambient-glow" id="focus-ambient-glow" aria-hidden="true"></div>
 
     <!-- Majestic Cinematic Backdrop Title ("our focus") -->
@@ -15,7 +17,7 @@
       <span class="focus-blur-title__line" id="focus-line-focus">focus</span>
     </div>
 
-    <!-- Free-floating Clean Numeric Counter (No circle, pure floating typography) -->
+    <!-- Free-floating Clean Numeric Counter -->
     <div class="focus-counter" id="focus-counter" aria-label="Discipline counter">
       <span class="focus-counter__current" id="focus-counter-current">01</span>
       <span class="focus-counter__slash">/</span>
@@ -26,10 +28,17 @@
     <div class="focus-horizontal-strip" id="focus-horizontal-strip">
 
       <!-- Tile 1: Social Media Growth -->
-      <article class="focus-tile is-active" id="focus-tile-1" data-tile-index="0">
+      <article
+        class="focus-tile is-active"
+        id="focus-tile-1"
+        data-tile-index="0"
+        itemscope
+        itemtype="https://schema.org/Service"
+      >
         <div class="focus-tile__content">
-          <h3 class="focus-tile__heading">Social Media Growth</h3>
-          <p class="focus-tile__desc">
+          <span class="focus-tile__kicker">Performance Video</span>
+          <h3 class="focus-tile__heading" itemprop="name">Social Media Growth</h3>
+          <p class="focus-tile__desc" itemprop="description">
             We build the core of your brand: scroll-stopping reels, organic viral reach, and high-ROAS paid funnels
             across Meta and TikTok that turn attention into market authority.
           </p>
@@ -37,68 +46,59 @@
         <div class="focus-tile__visual">
           <svg viewBox="0 0 340 260" fill="none" class="focus-tile__svg" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <pattern id="grid1" width="20" height="20" patternUnits="userSpaceOnUse">
+              <pattern id="focus-tile-1__grid" width="20" height="20" patternUnits="userSpaceOnUse">
                 <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.8" />
               </pattern>
-              <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="var(--blue)" />
-                <stop offset="100%" stop-color="var(--blue)" />
+              <linearGradient id="focus-tile-1__center-side" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="var(--ink-dark-2)" />
+                <stop offset="100%" stop-color="var(--ink-dark)" />
               </linearGradient>
-              <linearGradient id="pinkTop" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="var(--blue-lt)" />
-                <stop offset="100%" stop-color="var(--blue)" />
+              <linearGradient id="focus-tile-1__center-top" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="var(--amber-bright)" />
+                <stop offset="100%" stop-color="var(--amber-warm)" />
               </linearGradient>
-              <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="var(--blue-lt)" />
-                <stop offset="100%" stop-color="var(--blue)" />
+              <linearGradient id="focus-tile-1__left-side" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="var(--amber-warm)" />
+                <stop offset="100%" stop-color="var(--amber-warm)" />
               </linearGradient>
-              <linearGradient id="cyanTop" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="var(--blue-lt)" />
-                <stop offset="100%" stop-color="var(--blue-lt)" />
-              </linearGradient>
-              <linearGradient id="limeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="var(--amber)" />
+              <linearGradient id="focus-tile-1__left-top" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="var(--amber-bright)" />
                 <stop offset="100%" stop-color="var(--amber)" />
               </linearGradient>
-              <linearGradient id="limeTop" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="var(--amber)" />
-                <stop offset="100%" stop-color="var(--amber)" />
+              <linearGradient id="focus-tile-1__target-side" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="var(--ink-dark-3)" />
+                <stop offset="100%" stop-color="var(--ink-dark-2)" />
               </linearGradient>
             </defs>
 
-            <!-- Perspective Floor Grid -->
             <g transform="translate(170, 200) scale(1, 0.45) rotate(45)">
-              <rect x="-130" y="-130" width="260" height="260" fill="url(#grid1)" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+              <rect x="-130" y="-130" width="260" height="260" fill="url(#focus-tile-1__grid)" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
             </g>
 
-            <!-- Amber Column Left -->
-            <g transform="translate(65, 85)" class="iso-amber-pillar">
-              <polygon points="0,35 0,115 26,130 26,50" fill="var(--amber)" />
-              <polygon points="26,50 26,130 52,115 52,35" fill="url(#limeGrad)" />
-              <polygon points="0,35 26,20 52,35 26,50" fill="url(#limeTop)" />
+            <g transform="translate(65, 85)" class="focus-tile__pillar focus-tile__pillar--warm">
+              <polygon points="0,35 0,115 26,130 26,50" fill="var(--amber-warm)" />
+              <polygon points="26,50 26,130 52,115 52,35" fill="url(#focus-tile-1__left-side)" />
+              <polygon points="0,35 26,20 52,35 26,50" fill="url(#focus-tile-1__left-top)" />
             </g>
 
-            <!-- Blue Number '1' Pillar Center -->
-            <g transform="translate(130, 40)" class="iso-blue-pillar">
-              <polygon points="0,45 0,165 42,190 42,70" fill="var(--blue)" />
-              <polygon points="42,70 42,190 84,165 84,45" fill="url(#pinkGrad)" />
-              <polygon points="0,45 42,20 84,45 42,70" fill="url(#pinkTop)" />
+            <g transform="translate(130, 40)" class="focus-tile__pillar focus-tile__pillar--primary">
+              <polygon points="0,45 0,165 42,190 42,70" fill="var(--amber-bright)" />
+              <polygon points="42,70 42,190 84,165 84,45" fill="url(#focus-tile-1__center-side)" />
+              <polygon points="0,45 42,20 84,45 42,70" fill="url(#focus-tile-1__center-top)" />
               <text x="63" y="125" font-family="'Fragment Mono', monospace" font-size="44" font-weight="900" fill="var(--bg-0)" text-anchor="middle">1</text>
             </g>
 
-            <!-- Blue/Cyan Cube with Target Right -->
-            <g transform="translate(205, 100)" class="iso-target-cube">
-              <polygon points="0,30 0,95 32,112 32,47" fill="var(--blue)" />
-              <polygon points="32,47 32,112 64,95 64,30" fill="url(#cyanGrad)" />
-              <polygon points="0,30 32,13 64,30 32,47" fill="url(#cyanTop)" />
-              <circle cx="48" cy="79" r="14" stroke="var(--blue-lt)" stroke-width="2.5" fill="none" class="iso-target-ring-1" />
-              <circle cx="48" cy="79" r="7" stroke="var(--blue-lt)" stroke-width="2" fill="none" class="iso-target-ring-2" />
-              <circle cx="48" cy="79" r="2.5" fill="var(--blue-lt)" />
-              <line x1="48" y1="60" x2="48" y2="98" stroke="var(--blue-lt)" stroke-width="1.8" />
-              <line x1="29" y1="79" x2="67" y2="79" stroke="var(--blue-lt)" stroke-width="1.8" />
+            <g transform="translate(205, 100)" class="focus-tile__target">
+              <polygon points="0,30 0,95 32,112 32,47" fill="var(--ink-dark-2)" />
+              <polygon points="32,47 32,112 64,95 64,30" fill="url(#focus-tile-1__target-side)" />
+              <polygon points="0,30 32,13 64,30 32,47" fill="var(--amber-bright)" />
+              <circle cx="48" cy="79" r="14" stroke="var(--amber-bright)" stroke-width="2.5" fill="none" class="focus-tile__target-ring focus-tile__target-ring--outer" />
+              <circle cx="48" cy="79" r="7" stroke="var(--amber-bright)" stroke-width="2" fill="none" class="focus-tile__target-ring focus-tile__target-ring--inner" />
+              <circle cx="48" cy="79" r="2.5" fill="var(--amber-bright)" />
+              <line x1="48" y1="60" x2="48" y2="98" stroke="var(--amber-bright)" stroke-width="1.8" />
+              <line x1="29" y1="79" x2="67" y2="79" stroke="var(--amber-bright)" stroke-width="1.8" />
             </g>
 
-            <!-- Dark Pillar Back -->
             <g transform="translate(210, 60)">
               <polygon points="0,25 0,70 24,84 24,39" fill="var(--bg-0)" />
               <polygon points="24,39 24,84 48,70 48,25" fill="var(--bg-1)" />
@@ -109,41 +109,61 @@
       </article>
 
       <!-- Tile 2: SEO Dominance -->
-      <article class="focus-tile" id="focus-tile-2" data-tile-index="1">
+      <article
+        class="focus-tile"
+        id="focus-tile-2"
+        data-tile-index="1"
+        itemscope
+        itemtype="https://schema.org/Service"
+      >
         <div class="focus-tile__content">
-          <h3 class="focus-tile__heading">SEO Dominance</h3>
-          <p class="focus-tile__desc">
+          <span class="focus-tile__kicker">Organic Authority</span>
+          <h3 class="focus-tile__heading" itemprop="name">SEO Dominance</h3>
+          <p class="focus-tile__desc" itemprop="description">
             We engineer organic search supremacy: technical audits, intent positioning, and semantic content
             ecosystems that capture #1 Google rankings where decisions are made.
           </p>
         </div>
         <div class="focus-tile__visual">
           <svg viewBox="0 0 340 260" fill="none" class="focus-tile__svg" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="focus-tile-2__grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.8" />
+              </pattern>
+              <linearGradient id="focus-tile-2__step3-side" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="var(--amber)" />
+                <stop offset="100%" stop-color="var(--amber)" />
+              </linearGradient>
+              <linearGradient id="focus-tile-2__step3-top" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="var(--amber-bright)" />
+                <stop offset="100%" stop-color="var(--amber)" />
+              </linearGradient>
+            </defs>
+
             <g transform="translate(170, 200) scale(1, 0.45) rotate(45)">
-              <rect x="-130" y="-130" width="260" height="260" fill="url(#grid1)" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+              <rect x="-130" y="-130" width="260" height="260" fill="url(#focus-tile-2__grid)" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
             </g>
 
-            <!-- Ascending 3D Steps / Search Hierarchy -->
-            <g transform="translate(70, 130)" class="iso-step iso-step-1">
-              <polygon points="0,25 0,75 35,95 35,45" fill="var(--blue)" />
-              <polygon points="35,45 35,95 70,75 70,25" fill="var(--blue)" />
-              <polygon points="0,25 35,5 70,25 35,45" fill="var(--blue-lt)" />
+            <g transform="translate(70, 130)" class="focus-tile__step focus-tile__step--1">
+              <polygon points="0,25 0,75 35,95 35,45" fill="var(--ink-dark-2)" />
+              <polygon points="35,45 35,95 70,75 70,25" fill="var(--ink-dark-2)" />
+              <polygon points="0,25 35,5 70,25 35,45" fill="var(--ink-dark-3)" />
             </g>
 
-            <g transform="translate(135, 85)" class="iso-step iso-step-2">
-              <polygon points="0,30 0,120 40,143 40,53" fill="var(--blue)" />
-              <polygon points="40,53 40,143 80,120 80,30" fill="var(--blue-lt)" />
-              <polygon points="0,30 40,7 80,30 40,53" fill="var(--blue-lt)" />
-              <text x="60" y="95" font-family="'Fragment Mono', monospace" font-size="26" font-weight="900" fill="var(--blue)" text-anchor="middle">#1</text>
+            <g transform="translate(135, 85)" class="focus-tile__step focus-tile__step--2">
+              <polygon points="0,30 0,120 40,143 40,53" fill="var(--amber-warm)" />
+              <polygon points="40,53 40,143 80,120 80,30" fill="var(--amber-bright)" />
+              <polygon points="0,30 40,7 80,30 40,53" fill="var(--amber-bright)" />
+              <text x="60" y="95" font-family="'Fragment Mono', monospace" font-size="26" font-weight="900" fill="var(--bg-0)" text-anchor="middle">#1</text>
             </g>
 
-            <g transform="translate(210, 45)" class="iso-step iso-step-3">
+            <g transform="translate(210, 45)" class="focus-tile__step focus-tile__step--3">
               <polygon points="0,35 0,160 38,182 38,57" fill="var(--amber)" />
-              <polygon points="38,57 38,182 76,160 76,35" fill="url(#limeGrad)" />
-              <polygon points="0,35 38,13 76,35 38,57" fill="url(#limeTop)" />
+              <polygon points="38,57 38,182 76,160 76,35" fill="url(#focus-tile-2__step3-side)" />
+              <polygon points="0,35 38,13 76,35 38,57" fill="url(#focus-tile-2__step3-top)" />
             </g>
 
-            <g transform="translate(175, 40)" class="iso-search-lens">
+            <g transform="translate(175, 40)" class="focus-tile__lens">
               <circle cx="0" cy="0" r="18" stroke="var(--amber)" stroke-width="3" fill="rgba(var(--amber-rgb), 0.15)" />
               <line x1="12" y1="12" x2="26" y2="26" stroke="var(--amber)" stroke-width="4" stroke-linecap="round" />
             </g>
@@ -152,18 +172,31 @@
       </article>
 
       <!-- Tile 3: Digital Flagships -->
-      <article class="focus-tile" id="focus-tile-3" data-tile-index="2">
+      <article
+        class="focus-tile"
+        id="focus-tile-3"
+        data-tile-index="2"
+        itemscope
+        itemtype="https://schema.org/Service"
+      >
         <div class="focus-tile__content">
-          <h3 class="focus-tile__heading">Digital Flagships</h3>
-          <p class="focus-tile__desc">
+          <span class="focus-tile__kicker">High-Conversion Web</span>
+          <h3 class="focus-tile__heading" itemprop="name">Digital Flagships</h3>
+          <p class="focus-tile__desc" itemprop="description">
             We give your brand an unmistakable digital home: bespoke web design, lightning-quick Next.js
             architecture, and bulletproof conversion UX built to turn visitors into clients.
           </p>
         </div>
         <div class="focus-tile__visual">
           <svg viewBox="0 0 340 260" fill="none" class="focus-tile__svg" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="focus-tile-3__grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="0.8" />
+              </pattern>
+            </defs>
+
             <g transform="translate(170, 200) scale(1, 0.45) rotate(45)">
-              <rect x="-130" y="-130" width="260" height="260" fill="url(#grid1)" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+              <rect x="-130" y="-130" width="260" height="260" fill="url(#focus-tile-3__grid)" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
             </g>
 
             <g transform="translate(110, 50)">
@@ -172,14 +205,14 @@
               <polygon points="0,30 45,4 135,56 90,82" fill="var(--bg-1)" />
             </g>
 
-            <g transform="translate(70, 80)" class="iso-flagship-window">
-              <polygon points="0,35 0,130 110,193 110,98" fill="rgba(var(--blue-lt-rgb), 0.15)" stroke="var(--blue-lt)" stroke-width="2" />
-              <polygon points="110,98 110,193 155,167 155,72" fill="rgba(var(--blue-lt-rgb), 0.25)" stroke="var(--blue-lt)" stroke-width="2" />
-              <polygon points="0,35 45,9 155,72 110,98" fill="rgba(255, 255, 255, 0.15)" stroke="var(--blue-lt)" stroke-width="2" />
-              <circle cx="25" cy="55" r="3.5" fill="var(--blue)" class="iso-dot iso-dot-1" />
-              <circle cx="36" cy="61" r="3.5" fill="var(--amber)" class="iso-dot iso-dot-2" />
-              <circle cx="47" cy="67" r="3.5" fill="var(--blue-lt)" class="iso-dot iso-dot-3" />
-              <text x="55" y="130" font-family="'Fragment Mono', monospace" font-size="28" font-weight="700" fill="var(--amber)" transform="skewY(30)" class="iso-code-symbol">&lt;/&gt;</text>
+            <g transform="translate(70, 80)" class="focus-tile__window">
+              <polygon points="0,35 0,130 110,193 110,98" fill="rgba(var(--amber-rgb), 0.12)" stroke="var(--amber-warm)" stroke-width="2" />
+              <polygon points="110,98 110,193 155,167 155,72" fill="rgba(var(--amber-rgb), 0.2)" stroke="var(--amber-warm)" stroke-width="2" />
+              <polygon points="0,35 45,9 155,72 110,98" fill="rgba(255, 255, 255, 0.15)" stroke="var(--amber-warm)" stroke-width="2" />
+              <circle cx="25" cy="55" r="3.5" fill="var(--amber-warm)" class="focus-tile__dot focus-tile__dot--1" />
+              <circle cx="36" cy="61" r="3.5" fill="var(--amber)" class="focus-tile__dot focus-tile__dot--2" />
+              <circle cx="47" cy="67" r="3.5" fill="var(--amber-bright)" class="focus-tile__dot focus-tile__dot--3" />
+              <text x="55" y="130" font-family="'Fragment Mono', monospace" font-size="28" font-weight="700" fill="var(--amber)" transform="skewY(30)" class="focus-tile__code">&lt;/&gt;</text>
             </g>
           </svg>
         </div>

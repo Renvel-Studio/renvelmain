@@ -101,3 +101,18 @@ html.lenis body {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
+/* Visually hidden but accessible to screen readers / keyboard nav.
+   Use for section headings that provide document structure without
+   duplicating a large decorative/visual title already on screen. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
