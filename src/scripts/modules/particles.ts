@@ -32,8 +32,8 @@ export function initParticleField(prefersReducedMotion: boolean): void {
   let running = true;
   const mouse = { x: -9999, y: -9999 };
 
-  /* Approved 8-color palette RGB triplets + white dust */
-  const COLORS = ['255,200,0', '74,139,255', '0,85,255', '255,255,255'];
+  /* Approved 8-color palette RGB triplets with enhanced emerald green presence */
+  const COLORS = ['0,200,101', '0,200,101', '255,115,59', '240,171,150', '245,245,247'];
 
   function countForWidth() {
     if (w < 640) return 42;

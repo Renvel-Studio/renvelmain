@@ -167,7 +167,7 @@ export function initStickyCardStack(
 
 export function initPremiumParallax(prefersReducedMotion: boolean): void {
   const statementLine = document.querySelector<SVGPathElement>(
-    '.statement-line-path'
+    '.gradient-banner__underline-path, .statement-line-path'
   );
   const statementBanner =
     document.querySelector<HTMLElement>('.gradient-banner');
@@ -197,16 +197,18 @@ export function initPremiumParallax(prefersReducedMotion: boolean): void {
 
   if (prefersReducedMotion) return;
   try {
-    gsap.to('.gradient-banner__content', {
-      y: -40,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.gradient-banner',
-        scrub: true,
-        start: 'top bottom',
-        end: 'bottom top'
-      }
-    });
+    if (statementBanner && document.querySelector('.gradient-banner__content')) {
+      gsap.to('.gradient-banner__content', {
+        y: -40,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: statementBanner,
+          scrub: true,
+          start: 'top bottom',
+          end: 'bottom top'
+        }
+      });
+    }
 
     const introImages = document.querySelectorAll<HTMLElement>('.intro__image');
     introImages.forEach(img => {

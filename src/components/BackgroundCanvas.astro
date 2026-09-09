@@ -2,12 +2,15 @@
 // src/components/BackgroundCanvas.astro
 ---
 
-<!-- Living Dynamic Canvas: One Soft Radiant Yellow Blob & Ambient Light Engine -->
+<!-- Living Dynamic Canvas: Ambient Light Engine -->
 <div class="ambient-canvas" aria-hidden="true">
-  <!-- Primary Moving Radiant Yellow Fluid Orb — sits behind the hero headline -->
+  <!-- Primary Moving Radiant Flame & Peach Fluid Orb — sits behind the hero headline -->
   <div class="ambient-orb ambient-orb--yellow-hero"></div>
 
-  <!-- Interactive Golden Cursor Luminescence (Follows Pointer Smoothly) -->
+  <!-- Atmospheric Emerald Ambient Glow — subtle depth & vitality note -->
+  <div class="ambient-orb ambient-orb--emerald"></div>
+
+  <!-- Interactive Flame Cursor Luminescence (Follows Pointer Smoothly) -->
   <div class="ambient-orb ambient-orb--interactive" id="ambient-interactive-orb"></div>
 
   <!-- Cinema-Grade Tactile Film Grain Overlay -->
@@ -35,7 +38,7 @@
     pointer-events: none;
   }
 
-  /* 1. Primary Moving Radiant Yellow Orb — Center/Hero Focus.
+  /* 1. Primary Moving Flame & Peach Fluid Orb — Center/Hero Focus.
      Single soft blob, kept subtle at the core so text sitting on top
      of it stays crisp; the glow reads at the edges instead. */
   .ambient-orb--yellow-hero {
@@ -47,16 +50,16 @@
     max-height: 950px;
     background: radial-gradient(
       circle at 45% 45%,
-      rgba(255, 200, 0, 0.32) 0%,
-      rgba(255, 180, 0, 0.20) 35%,
-      rgba(255, 140, 0, 0.09) 60%,
+      rgba(255, 115, 59, 0.28) 0%,
+      rgba(240, 171, 150, 0.18) 35%,
+      rgba(255, 115, 59, 0.07) 60%,
       transparent 75%
     );
     opacity: 0.85;
     animation: floatMorphYellow 22s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
   }
 
-  /* 2. Interactive Golden Cursor Glow */
+  /* 2. Interactive Flame Cursor Glow */
   .ambient-orb--interactive {
     top: 0;
     left: 0;
@@ -66,14 +69,33 @@
     max-height: 600px;
     background: radial-gradient(
       circle,
-      rgba(255, 200, 0, 0.22) 0%,
-      rgba(255, 160, 0, 0.08) 50%,
+      rgba(255, 115, 59, 0.22) 0%,
+      rgba(240, 171, 150, 0.08) 50%,
       transparent 70%
     );
     opacity: 0.8;
     filter: blur(80px);
     transform: translate3d(50vw, 40vh, 0) translate(-50%, -50%);
     transition: opacity 0.4s ease;
+  }
+
+  /* 3. Subtle Atmospheric Emerald Whisper — Adds depth and vitality to dark obsidian */
+  .ambient-orb--emerald {
+    top: 55vh;
+    right: -10vw;
+    width: 48vw;
+    height: 48vw;
+    max-width: 720px;
+    max-height: 720px;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(0, 200, 101, 0.12) 0%,
+      rgba(0, 200, 101, 0.04) 40%,
+      transparent 70%
+    );
+    opacity: 0.65;
+    filter: blur(120px);
+    animation: floatMorphEmerald 30s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
   }
 
   /* Organic Fluid Morphing & Orbit Keyframes */
@@ -93,6 +115,21 @@
     100% {
       transform: translate3d(8vw, 4vh, 0) scale(1.05) rotate(135deg);
       border-radius: 60% 40% 50% 50% / 50% 50% 60% 40%;
+    }
+  }
+
+  @keyframes floatMorphEmerald {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+      border-radius: 50% 50% 40% 60% / 60% 40% 60% 40%;
+    }
+    50% {
+      transform: translate3d(-6vw, -8vh, 0) scale(1.1) rotate(-60deg);
+      border-radius: 40% 60% 60% 40% / 50% 50% 40% 60%;
+    }
+    100% {
+      transform: translate3d(4vw, 6vh, 0) scale(0.95) rotate(45deg);
+      border-radius: 60% 40% 50% 50% / 40% 60% 50% 50%;
     }
   }
 

@@ -17,6 +17,8 @@ export function initFocusHorizontalScroll(
 
   const lineOur = document.getElementById('focus-line-our');
   const lineFocus = document.getElementById('focus-line-focus');
+  const charsOur = lineOur ? Array.from(lineOur.querySelectorAll<HTMLElement>('.focus-char')) : [];
+  const charsFocus = lineFocus ? Array.from(lineFocus.querySelectorAll<HTMLElement>('.focus-char')) : [];
   const counter = document.getElementById('focus-counter');
   const counterCurrent = document.getElementById('focus-counter-current');
   const ambientGlow = document.getElementById('focus-ambient-glow');
@@ -48,6 +50,8 @@ export function initFocusHorizontalScroll(
       if (prefersReducedMotion || isReduced || isMobile) {
         if (lineOur) gsap.set(lineOur, { clearProps: 'all', opacity: 1 });
         if (lineFocus) gsap.set(lineFocus, { clearProps: 'all', opacity: 1 });
+        if (charsOur.length > 0) gsap.set(charsOur, { clearProps: 'all', opacity: 1 });
+        if (charsFocus.length > 0) gsap.set(charsFocus, { clearProps: 'all', opacity: 1 });
         if (counter) gsap.set(counter, { clearProps: 'all', opacity: 1 });
         if (strip) gsap.set(strip, { clearProps: 'all' });
 
@@ -173,10 +177,10 @@ export function initFocusHorizontalScroll(
         pin: true,
         pinSpacing: true,
         pinType: 'fixed',
-        scrub: 0.3, // Silky 1:1 synchronization with Lenis smooth scroll
+        scrub: 0.5, // Silky, responsive synchronization with Lenis smooth scroll
         anticipatePin: 1,
         start: 'top top',
-        end: () => `+=${getScrollDistance() + window.innerHeight * 1.15}`, // Generous runway for comfortable reading pace
+        end: () => `+=${getScrollDistance() + window.innerHeight * 1.55}`, // Generous runway for slow unhurried reveal & glide
         invalidateOnRefresh: true,
         onRefresh: self => {
           measureTiles();
@@ -208,34 +212,107 @@ export function initFocusHorizontalScroll(
       }
     });
 
-    // Linear continuous glide across the entire pinned scroll:
-    // Zero deadzones, zero stutter, zero sudden acceleration
+    // --- Slow, Majestic Cinematic Reveal of "our focus" Letters ---
+    // Line 1: 'our' letters bloom slowly from deep optical blur into diamond clarity
+    if (charsOur.length > 0) {
+      masterTl.fromTo(
+        charsOur,
+        {
+          opacity: 0,
+          filter: 'blur(32px)',
+          y: 30,
+          scale: 0.86
+        },
+        {
+          opacity: 1,
+          filter: 'blur(0px)',
+          y: 0,
+          scale: 1,
+          duration: 0.32,
+          stagger: 0.04,
+          ease: 'power2.out'
+        },
+        0
+      );
+    } else if (lineOur) {
+      masterTl.fromTo(
+        lineOur,
+        { opacity: 0, filter: 'blur(32px)' },
+        { opacity: 1, filter: 'blur(0px)', duration: 0.34, ease: 'power2.out' },
+        0
+      );
+    }
+
+    if (lineOur) {
+      masterTl.fromTo(
+        lineOur,
+        { y: 35, letterSpacing: '0.08em', scale: 0.90 },
+        { y: 0, letterSpacing: '-0.04em', scale: 1, duration: 0.36, ease: 'power2.out' },
+        0
+      );
+    }
+
+    // Line 2: 'focus' letters follow in a graceful staggered wave
+    if (charsFocus.length > 0) {
+      masterTl.fromTo(
+        charsFocus,
+        {
+          opacity: 0,
+          filter: 'blur(32px)',
+          y: 30,
+          scale: 0.86
+        },
+        {
+          opacity: 1,
+          filter: 'blur(0px)',
+          y: 0,
+          scale: 1,
+          duration: 0.32,
+          stagger: 0.035,
+          ease: 'power2.out'
+        },
+        0.06
+      );
+    } else if (lineFocus) {
+      masterTl.fromTo(
+        lineFocus,
+        { opacity: 0, filter: 'blur(32px)' },
+        { opacity: 1, filter: 'blur(0px)', duration: 0.34, ease: 'power2.out' },
+        0.06
+      );
+    }
+
+    if (lineFocus) {
+      masterTl.fromTo(
+        lineFocus,
+        { y: 45, letterSpacing: '0.08em', scale: 0.90 },
+        { y: 0, letterSpacing: '-0.04em', scale: 1, duration: 0.38, ease: 'power2.out' },
+        0.06
+      );
+    }
+
+    // Numeric counter fades softly into position
+    if (counter) {
+      masterTl.fromTo(
+        counter,
+        { opacity: 0, y: -12 },
+        { opacity: 1, y: 0, duration: 0.24, ease: 'power2.out' },
+        0.08
+      );
+    }
+
+    // Seamless continuous horizontal traverse:
+    // Starts gently at 0.08 with smooth power1.inOut acceleration (zero stutter),
+    // glides comfortably across tiles, and settles gracefully into Tile 3 at 0.94
     masterTl.to(
       strip,
       {
         x: () => -getScrollDistance(),
-        duration: 1,
-        ease: 'none'
+        duration: 0.86,
+        ease: 'power1.inOut'
       },
-      0
+      0.08
     );
-
-    if (lineOur && lineFocus) {
-      masterTl.fromTo(
-        [lineOur, lineFocus],
-        { opacity: 0.85, y: 10 },
-        { opacity: 1, y: 0, duration: 0.15, ease: 'power1.out' },
-        0
-      );
-    }
-    if (counter) {
-      masterTl.fromTo(
-        counter,
-        { opacity: 0.85 },
-        { opacity: 1, duration: 0.15, ease: 'power1.out' },
-        0
-      );
-    }
 
     const st = masterTl.scrollTrigger!;
 
@@ -263,7 +340,8 @@ export function initFocusHorizontalScroll(
       const glideProgress =
         maxDist > 0 ? gsap.utils.clamp(0, 1, targetOffset / maxDist) : 0;
 
-      const targetScrollY = st.start + glideProgress * totalScroll;
+      const tlFraction = 0.08 + glideProgress * 0.86;
+      const targetScrollY = st.start + tlFraction * totalScroll;
 
       setActiveDiscipline(targetIndex);
 
@@ -294,11 +372,11 @@ export function initFocusHorizontalScroll(
         const cardInner = (tile.querySelector('.focus-tile__inner') ||
           tile) as HTMLElement;
 
-        const tiltX = gsap.quickTo(cardInner, 'rotateX', {
+        const tiltX = gsap.quickTo(cardInner, 'rotationX', {
           duration: 0.4,
           ease: 'power2.out'
         });
-        const tiltY = gsap.quickTo(cardInner, 'rotateY', {
+        const tiltY = gsap.quickTo(cardInner, 'rotationY', {
           duration: 0.4,
           ease: 'power2.out'
         });

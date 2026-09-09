@@ -174,12 +174,12 @@ export function initHeroCtaInteraction(
     startScramble();
 
     if (!prefersReducedMotion) {
-      // 1. Solid amber background swap — strictly no shadow bloom, no transform
+      // 1. Solid emerald green background swap where gold used to be
       gsap.to(btn, {
-        backgroundColor: '#d4af37',
-        color: '#08090d',
-        borderColor: '#d4af37',
-        boxShadow: 'none',
+        backgroundColor: '#00c865',
+        color: '#0a0a0c',
+        borderColor: '#00c865',
+        boxShadow: '0 0 35px rgba(0, 200, 101, 0.35)',
         y: 0,
         duration: 0.28,
         ease: 'power2.out',
@@ -189,7 +189,7 @@ export function initHeroCtaInteraction(
       // 2. Inverted solid dark badge (no circle rotation)
       if (icon) {
         gsap.to(icon, {
-          backgroundColor: '#08090d',
+          backgroundColor: '#0a0a0c',
           rotate: 0,
           duration: 0.28,
           ease: 'power2.out',
@@ -200,7 +200,7 @@ export function initHeroCtaInteraction(
       // 3. Diagonal fly-out and re-entry on SVG arrow only
       if (iconSvg) {
         gsap.to(iconSvg, {
-          stroke: '#d4af37',
+          stroke: '#00c865',
           duration: 0.28,
           ease: 'power2.out',
           overwrite: 'auto'
@@ -236,9 +236,9 @@ export function initHeroCtaInteraction(
 
     if (!prefersReducedMotion) {
       gsap.to(btn, {
-        backgroundColor: 'rgba(14, 20, 36, 0.75)',
-        color: '#f5f4f0',
-        borderColor: 'rgba(255, 200, 0, 0.35)',
+        backgroundColor: 'rgba(19, 19, 24, 0.75)',
+        color: '#f5f5f7',
+        borderColor: 'rgba(0, 200, 101, 0.4)',
         boxShadow: 'none',
         y: 0,
         duration: 0.3,
@@ -248,7 +248,7 @@ export function initHeroCtaInteraction(
 
       if (icon) {
         gsap.to(icon, {
-          backgroundColor: '#d4af37',
+          backgroundColor: '#00c865',
           rotate: 0,
           duration: 0.3,
           ease: 'power2.out',
@@ -262,7 +262,7 @@ export function initHeroCtaInteraction(
           x: 0,
           y: 0,
           opacity: 1,
-          stroke: '#08090d',
+          stroke: '#0a0a0c',
           duration: 0.26,
           ease: 'power2.out',
           overwrite: 'auto'

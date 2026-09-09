@@ -4,46 +4,54 @@
    ============================================================ */
 
 :root {
-  /* --- Master Editorial Palette: Midnight Obsidian & Radiant Yellow --- */
-  --bg-0: #080b12;
-  --bg-1: #0e1424;
-  --bg-2: #161e32;
+  /* --- Master Editorial Palette: Obsidian, Charcoal, Flame, Emerald & Peach --- */
+  --bg-0: #0a0a0c;
+  --bg-1: #131318;
+  --bg-2: #26262e;
   --line: rgba(255, 255, 255, 0.08);
-  --line-hover: rgba(255, 255, 255, 0.18);
-  --line-amber: rgba(255, 200, 0, 0.28);
-  --ink: #f7f7f9;
-  --ink-2: #a4adc8;
-  --ink-3: #6f7895;
+  --line-hover: rgba(255, 255, 255, 0.16);
+  --line-amber: rgba(255, 115, 59, 0.28);
+  --ink: #f5f5f7;
+  --ink-2: #8e8e9e;
+  --ink-3: #5c5c6b;
 
-  /* Radiant Yellow & Amber Signature Accent */
-  --amber: #ffc800;
-  --amber-bright: #ffe14d;
-  --amber-warm: #ff9e00;
-  --amber-glow: rgba(255, 200, 0, 0.35);
-  --amber-glow-soft: rgba(255, 200, 0, 0.12);
+  /* Primary Accent: Vibrant Flame Coral (#ff733b) */
+  --amber: #ff733b;
+  --amber-bright: #ff8e5e;
+  --amber-warm: #ff733b;
+  --amber-glow: rgba(255, 115, 59, 0.35);
+  --amber-glow-soft: rgba(255, 115, 59, 0.12);
 
-  /* Electric Azure Dual-Tone Counterpart */
-  --blue: #0055ff;
-  --blue-lt: #4a8bff;
+  /* Secondary Accent: Soft Warm Peach (#f0ab96) */
+  --peach: #f0ab96;
+  --peach-glow: rgba(240, 171, 150, 0.25);
 
-  /* Dark Ink for high-contrast text on yellow badges/buttons */
-  --ink-dark: #0a0c14;
-  --ink-dark-2: #242838;
-  --ink-dark-3: #4a4d5a;
+  /* Vitality & Signal Accent: Vivid Emerald Green (#00c865) */
+  --green: #00c865;
+  --green-glow: rgba(0, 200, 101, 0.35);
+  --blue: #00c865;
+  --blue-lt: #33d984;
+
+  /* Dark Ink for high-contrast text on accent badges/buttons */
+  --ink-dark: #0a0a0c;
+  --ink-dark-2: #131318;
+  --ink-dark-3: #26262e;
 
   /* RGB Triplets for Alpha Blending */
-  --bg-0-rgb: 8, 11, 18;
-  --bg-1-rgb: 14, 20, 36;
-  --bg-2-rgb: 22, 30, 50;
+  --bg-0-rgb: 10, 10, 12;
+  --bg-1-rgb: 19, 19, 24;
+  --bg-2-rgb: 38, 38, 46;
   --line-rgb: 255, 255, 255;
-  --ink-rgb: 247, 247, 249;
-  --ink-2-rgb: 164, 173, 200;
-  --amber-rgb: 255, 200, 0;
-  --amber-warm-rgb: 255, 158, 0;
-  --blue-rgb: 0, 85, 255;
-  --blue-lt-rgb: 74, 139, 255;
-  --ink-dark-rgb: 10, 12, 20;
-  --amber-bright-rgb: 255, 225, 77;
+  --ink-rgb: 245, 245, 247;
+  --ink-2-rgb: 142, 142, 158;
+  --amber-rgb: 255, 115, 59;
+  --amber-warm-rgb: 255, 115, 59;
+  --amber-bright-rgb: 255, 142, 94;
+  --peach-rgb: 240, 171, 150;
+  --green-rgb: 0, 200, 101;
+  --blue-rgb: 0, 200, 101;
+  --blue-lt-rgb: 51, 217, 132;
+  --ink-dark-rgb: 10, 10, 12;
 
   /* --- Font Families --- */
   --font-display: 'Fraunces', serif;
